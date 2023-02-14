@@ -1,0 +1,254 @@
+﻿
+@{
+    ViewBag.Title = "Nghiệm thu đề tài";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listLecture = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.TopicOfLecture;
+    var listStudent = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.TopicOfStudent;
+    var stt = 1;
+    var sttStu = 1;
+}
+@using DuAnQLNCKH.Models
+<div style="margin:20px 0 20px 0" class="page-title">
+
+    <strong style="font-size:25px">Nghiệm thu đề tài</strong>
+</div>
+<hr style="width:1200px" />
+<div class="tabs">
+    <div class="tab-nav-wrapper">
+        <ul>
+            <li class="active"><a href="#tab1">Đề tài giảng viên</a></li>
+            <li><a href="#tab2">Đề tài sinh viên</a></li>
+
+        </ul>
+    </div>
+
+    <div class="tab-content-wrapper" style="width: 1200px">
+        <div id="tab1" class="tab-content" style="display:none;">
+            <table class="table1" style="width:1055px">
+
+                <tr class="headerrow">
+                    <th>STT</th>
+                    <th>Nhóm tác giả</th>
+                     
+                    <th>
+                        Tên công trình
+                    </th>
+
+                    <th>
+                        Phân loại
+                    </th>
+                    <th>
+                        Ngày bắt đầu
+                    </th>
+                     
+                    <th>
+                        Ngày kết thúc
+                    </th>
+                    <th>
+                        Kinh phí
+                    </th>
+
+                   
+                    <th></th>
+                </tr>
+                @foreach (var deTaiGV in listLecture)
+                {
+
+                    <tr id="@deTaiGV.topicOfLecture.IdTp" class="lecture">
+                        @*<td id="idtp" data-value="@deTaiGV.topicOfLecture.IdTp">
+
+                            </td>*@
+                        <td class="stt" id="@stt">@stt </td>
+                        @{ stt++;}
+                         
+                        <td>
+                            @foreach (var i in new TopicOfLectureModel().listAuthors(deTaiGV.topicOfLecture.IdTp))
+                            {
+                                if (i.Grade == 0)
+                                {
+                                    <b>@i.NameAu *</b> <br />
+                                }
+                                else
+                                {
+                                    <br /> @i.NameAu
+                                }
+                            }
+                        </td>   
+                         
+                         
+                        <td width="200px">
+
+                            @deTaiGV.topicOfLecture.Name
+                        </td>
+
+                        <td>
+                            @deTaiGV.pointTable.NameP
+
+                        </td>
+                        <td>
+                            @deTaiGV.topicOfLecture.DateSt.ToString("d")
+                        </td>
+                        
+                        <td>
+                            @{
+
+                                var dateEnd = deTaiGV.topicOfLecture.DateSt.AddMonths(deTaiGV.topicOfLecture.Times).ToString("d");
+                                <p>@dateEnd</p>
+                            }
+                        </td>
+                        <td>
+                            @deTaiGV.topicOfLecture.Expense
+                        </td>
+
+                      
+                        <td>
+                            <a href="@Url.Action("detailAcceptance","UpdateActivity", new { IdTp=deTaiGV.topicOfLecture.IdTp})" style="width:100px" class="btn btn-success"> <span class="icon text-white-50"><i class="fas fa-check"> </i></span>  <span><b>Nghiệm thu</b></span>    </a>
+
+                        </td>
+
+
+                    </tr>
+
+                }
+
+            </table>
+        </div>
+
+        <div id="tab2" class="tab-content" style="display:none;">
+            <table class="table1" style="width:1040px">
+
+                <tr class="headerrow">
+
+                    <th>STT</th>
+                    <th> Sinh viên</th>
+                    <th>Khoa</th>
+                    <th>Tên đề tài</th>
+                    <th>Giảng viên hướng dẫn</th>
+                    <th> Phân loại</th>
+
+
+                    <th>Bắt đầu</th>
+
+
+                    <th>Thời gian thực hiện</th>
+                    <th>Kết thúc</th>
+
+                    <th>Kinh phí</th>
+
+ 
+                    <th></th>
+
+
+                </tr>
+
+                @foreach (var topicOfStudent in listStudent)
+                {
+
+                    <tr id="@topicOfStudent.topicOfStudent.IdTp" class="student">
+                        <td class="sttStu">@sttStu</td>
+                        @{
+                            sttStu++;
+                        }
+                        <td width="130px">
+                            @topicOfStudent.topicOfStudent.NameSt
+
+                        </td>
+                        <td>@topicOfStudent.subject.NameCu</td>
+                        <td width="200px">
+                            @topicOfStudent.topicOfStudent.Name
+                        </td>
+                        <td>@topicOfStudent.topicOfStudent.LectureIntruc</td>
+                        <td width="160px">
+                            @topicOfStudent.pointTable.NameP
+                        </td>
+                        <td>
+                            @topicOfStudent.topicOfStudent.DateSt.ToString("dd/MM/yyyy")
+                        </td>
+                        <td width="150px">
+                            @topicOfStudent.topicOfStudent.Times tháng
+                        </td>
+                        <td>
+                            @{
+
+
+
+                                var dateEnd = topicOfStudent.topicOfStudent.DateSt.AddMonths(topicOfStudent.topicOfStudent.Times).ToString("d");
+                                <p>@dateEnd</p>
+                            }
+                        </td>
+                        <td>
+                            @topicOfStudent.topicOfStudent.Expense
+                        </td>
+ 
+                        <td width="130px">
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" onclick="XdBtnsvClicked('@topicOfStudent.topicOfStudent.IdTp')"> <i class="fas fa-check"> </i> <span><b>Duyệt</b></span>   </button>
+
+                        </td>
+
+
+
+                    </tr>
+
+                }
+
+
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script>
+
+    function XdBtnClicked(IdTp) {
+        var stt1 = 1;
+        var row = $('#' + IdTp);
+
+        row.remove();
+        $(".lecture").each(function () {
+            $(this).find(".stt").text(stt1);
+            stt1++;
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/UpdateActivity/Acceptance/",
+            data: { IdTp: IdTp},
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+
+    function XdBtnsvClicked(IdTp) {
+
+        var stt1 = 1;
+        var row = $('#' + IdTp);
+
+        row.remove();
+        $(".student").each(function () {
+            $(this).find(".sttStu").text(stt1);
+            stt1++;
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/UpdateActivity/AcceptanceStu/",
+            data: { IdTp: IdTp},
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+</script>

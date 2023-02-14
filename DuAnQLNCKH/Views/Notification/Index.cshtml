@@ -1,0 +1,217 @@
+﻿@model DuAnQLNCKH.Models.FileNotifiModel
+
+@{
+    ViewBag.Title = "Thông báo giảng viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var noti = (List<DuAnQLNCKH.Models.Notification>)ViewBag.NotificationsLec;
+
+}
+@*<link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />*@
+ <div style="margin-top: 20px; color: #1d68c5" class="page-title">
+
+    <img src="~/images/speaker.png" width="50px" height="50px" />
+    <strong style="font-size:20px">THÔNG BÁO GIẢNG VIÊN</strong>
+</div>
+<hr />
+<div class="row-cols-lg-12">
+    @foreach (var item in noti)
+    {
+        <p>
+            @{
+                var url = "/thong-bao/" + @item.Title + "-" + @item.IdNo;
+            }
+            <i style="color: #5757c1" class="fa fa-flag"></i>
+            <b> <a id="" href="@url"> @item.Title</a><small>[@item.DateCreat]</small></b>
+
+        </p>
+    }
+</div>
+
+
+@if (Session["Acess"].ToString().Equals("1"))
+{
+    <button style="background: #2cc6dc;" id='addtype' class="btn btn-primary btnAddNotification">
+        <i class="fa fa-plus">Thêm mới</i>
+    </button>
+}
+<div id="showModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" style="max-width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm mới thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            @using (Html.BeginForm("CreateNotifi", "Notification", FormMethod.Post, new { @class = "form - horizontal", enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                    <div class="form-group">
+                        Tiêu đề
+                        @Html.TextBox("Title", null, new { @class = "form-control", required = "Required" })
+                    </div>
+                    <div class="form-group">
+                        Nội dung thông báo
+                        @Html.TextBox("Content", null, new { @class = "form-control", required = "Required" })
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="Object" value="GV" />
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.FileName)
+
+                        <input type="file" id="files" name="files" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Lưu" />
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@*tạo email thông báo*@
+
+
+<div id="showmodal1" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" style="max-width:900px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Gửi email thông báo</h4>
+                <button id="notifica" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            @using (Html.BeginForm("sendEmail", "Notification", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                Tiêu đề
+                            </div>
+                            <div class="col-md-4">
+                                <input style="width:500px" name="Subject" id="Subject" type="text" required />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                Nội dung thông báo
+                            </div>
+                            <div class="col-md-4">
+                                <textarea style="width:500px; height:250px" name="Body" id="Body" type="text" required></textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                Những đề tài cần gửi email đến
+                            </div>
+                            <div class="col-md-4">
+                                @if (ViewBag.listProgress != null)
+                                {
+
+                                    @Html.DropDownList("Progress", ViewBag.listProgress as SelectList, "--Lựa chọn trạng thái đề tài--", new { @required = "Required", @Class = "form-control" })
+
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                Danh sách Email:
+                            </div>
+                            <div class="col-md-4">
+                                @*@if (ViewBag.listProgress != null)
+                                    {*@
+
+                                @*@Html.DropDownList("IdLeEm", new SelectList(ViewBag.listEmail, "IdLe", "Email"), new { @id = "IdLeEm" })*@
+                                @*@Html.DropDownList("IdLeEm1", new SelectList(" "), "--Tất cả loại điểm--", new { @class = "form-control", @style = "background:#91a6e4ad; color:black; border:solid 1px black" })*@
+                                @Html.ListBox("SelectedIdArray", new MultiSelectList(ViewBag.listEmail, "Email", "Email"), new { @id = "IdLeEm1" })
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Gửi" />
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@if (Session["Acess"].ToString().Equals("1"))
+{
+    // <button style="margin: 20px 0 20px 20px; background: #f7bf30;" id='email' class="btn btn-primary" data-toggle="modal" data-target="#showmodal1"><i class="fa fa-envelope"> <span style="margin-left:5px">Gửi email thông báo</span></i> </button>
+}
+ 
+<script type="text/javascript">
+    $('.btnAddNotification').on('click', function () {
+        console.log("OK");
+        $('#showModal').modal('show');
+    })
+    $(function () {
+        $("#IdLeEm1").chosen({
+            width: "560px"
+        });
+        $.get("/Notification/getTypeList", { Progress: 0 }, function (data) {
+
+            $("#IdLeEm1").empty(); $("#IdLeEm1").select();
+            $.each(data, function (index, row) {
+
+                $("#IdLeEm1").append("<option id='IdPi'  value='" + row.Email + "'>" + row.Email + "</option>");
+
+                $('#IdLeEm1').find('option[value="' + row.Email + '"]').attr("selected", "selected");
+                /**/
+
+                $('#IdLeEm1').trigger("chosen:updated");
+
+
+
+            });
+
+        });
+    });
+    $("#Progress").change(function () {
+        $.get("/Notification/getTypeList", { Progress: $("#Progress").val() }, function (data) {
+            $("#IdLeEm1").empty(); $("#IdLeEm1").select();
+            if (data != "") {
+
+                $.each(data, function (index, row) {
+
+                    $("#IdLeEm1").append("<option id='IdPi'  value='" + row.Email + "'>" + row.Email + "</option>");
+
+                    $('#IdLeEm1').find('option[value="' + row.Email + '"]').attr("selected", "selected");
+
+                });
+            }
+            $('#IdLeEm1').trigger("chosen:updated");
+
+
+        });
+
+
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

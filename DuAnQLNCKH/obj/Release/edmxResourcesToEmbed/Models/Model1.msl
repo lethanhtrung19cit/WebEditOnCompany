@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="nckh_dhdnModelStoreContainer" CdmEntityContainer="DHTDTTDNEntities12">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+          <ScalarProperty Name="Access" ColumnName="Access" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Authors">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Author">
+        <MappingFragment StoreEntitySet="Author">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IdAu" ColumnName="IdAu" />
+          <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="NameAu" ColumnName="NameAu" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChildDetails">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.ChildDetail">
+        <MappingFragment StoreEntitySet="ChildDetail">
+          <ScalarProperty Name="IdChild" ColumnName="IdChild" />
+          <ScalarProperty Name="IdDetail" ColumnName="IdDetail" />
+          <ScalarProperty Name="NameChild" ColumnName="NameChild" />
+          <ScalarProperty Name="Hours" ColumnName="Hours" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="IdKhoa" ColumnName="IdKhoa" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetailStatementLes">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.DetailStatementLe">
+        <MappingFragment StoreEntitySet="DetailStatementLe">
+          <ScalarProperty Name="IdDtST" ColumnName="IdDtST" />
+          <ScalarProperty Name="IdSt" ColumnName="IdSt" />
+          <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+          <ScalarProperty Name="Times" ColumnName="Times" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetailType1">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.DetailType1">
+        <MappingFragment StoreEntitySet="DetailType1">
+          <ScalarProperty Name="IdDetail" ColumnName="IdDetail" />
+          <ScalarProperty Name="IdType" ColumnName="IdType" />
+          <ScalarProperty Name="NameDetail" ColumnName="NameDetail" />
+          <ScalarProperty Name="Hours" ColumnName="Hours" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Emails">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Email">
+        <MappingFragment StoreEntitySet="Email">
+          <ScalarProperty Name="NameEmail" ColumnName="NameEmail" />
+          <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Extensions">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Extension">
+        <MappingFragment StoreEntitySet="Extension">
+          <ScalarProperty Name="IdEx" ColumnName="IdEx" />
+          <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+          <ScalarProperty Name="Times" ColumnName="Times" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Faculties">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Faculty">
+        <MappingFragment StoreEntitySet="Faculty">
+          <ScalarProperty Name="IdFa" ColumnName="IdFa" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Information">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Information">
+        <MappingFragment StoreEntitySet="Information">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="NameLe" ColumnName="NameLe" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CMND" ColumnName="CMND" />
+          <ScalarProperty Name="IdPo" ColumnName="IdPo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notifications">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Notification">
+        <MappingFragment StoreEntitySet="Notification">
+          <ScalarProperty Name="IdNo" ColumnName="IdNo" />
+          <ScalarProperty Name="DateCreat" ColumnName="DateCreat" />
+          <ScalarProperty Name="PersonCreat" ColumnName="PersonCreat" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Object" ColumnName="Object" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PointTables">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.PointTable">
+        <MappingFragment StoreEntitySet="PointTable">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IdP" ColumnName="IdP" />
+          <ScalarProperty Name="IdAu" ColumnName="IdAu" />
+          <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+          <ScalarProperty Name="Hours" ColumnName="Hours" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Positions">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Position">
+        <MappingFragment StoreEntitySet="Position">
+          <ScalarProperty Name="IdPo" ColumnName="IdPo" />
+          <ScalarProperty Name="NamePo" ColumnName="NamePo" />
+          <ScalarProperty Name="Hours" ColumnName="Hours" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProgressLes">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.ProgressLe">
+        <MappingFragment StoreEntitySet="ProgressLe">
+          <ScalarProperty Name="IdPr" ColumnName="IdPr" />
+          <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Progress" ColumnName="Progress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProgressSts">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.ProgressSt">
+        <MappingFragment StoreEntitySet="ProgressSt">
+          <ScalarProperty Name="IdPr" ColumnName="IdPr" />
+          <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Progress" ColumnName="Progress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Statements">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Statement">
+        <MappingFragment StoreEntitySet="Statements">
+          <ScalarProperty Name="IdSt" ColumnName="IdSt" />
+          <ScalarProperty Name="DateRp" ColumnName="DateRp" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Subjects">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Subject">
+        <MappingFragment StoreEntitySet="Subject">
+          <ScalarProperty Name="IdSu" ColumnName="IdSu" />
+          <ScalarProperty Name="NameCu" ColumnName="NameCu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TopicOfLectures">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.TopicOfLecture">
+        <MappingFragment StoreEntitySet="TopicOfLecture">
+          <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DateSt" ColumnName="DateSt" />
+          <ScalarProperty Name="Times" ColumnName="Times" />
+          <ScalarProperty Name="Expense" ColumnName="Expense" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CountAuthor" ColumnName="CountAuthor" />
+          <ScalarProperty Name="FileDemo" ColumnName="FileDemo" />
+          <ScalarProperty Name="IdType" ColumnName="IdType" />
+          <ScalarProperty Name="IdFa" ColumnName="IdFa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TopicOfStudents">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.TopicOfStudent">
+        <MappingFragment StoreEntitySet="TopicOfStudent">
+          <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="NameSt" ColumnName="NameSt" />
+          <ScalarProperty Name="DateSt" ColumnName="DateSt" />
+          <ScalarProperty Name="IdSu" ColumnName="IdSu" />
+          <ScalarProperty Name="LectureIntruc" ColumnName="LectureIntruc" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Types">
+      <EntityTypeMapping TypeName="nckh_dhdnModel.Type">
+        <MappingFragment StoreEntitySet="Type">
+          <ScalarProperty Name="IdType" ColumnName="IdType" />
+          <ScalarProperty Name="NameType" ColumnName="NameType" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

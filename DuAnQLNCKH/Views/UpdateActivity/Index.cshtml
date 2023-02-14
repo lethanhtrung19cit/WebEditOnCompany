@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "Cập nhật hoạt động nghiên cứu khoa học";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int stt = 1;
+    int stt1 = 1;
+    string id = "a";
+    var topicofLecture = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.TopicOfLecture;
+    //var detailProgress = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.detailProgress;
+}
+@using DuAnQLNCKH.Models;
+<div>
+    <div style="margin:20px 0 20px 0" class="page-title">
+        <img src="~/images/report.png" width="50px" height="50px" />
+        <strong style="font-size:25px">Cập nhật hoạt động nghiên cứu</strong>
+    </div>
+    <div>
+        <table class="table1" style="width:1100px">
+            <tr class="headerrow">
+                <th>
+                    STT
+                </th>
+                <th>
+                    Tên giảng viên
+                </th>
+                <th>
+                    Tên đề tài
+                </th>
+                
+                <th>
+                    Loại đề tài
+                </th>
+
+                <th>
+                    Trạng thái
+                </th>
+
+                <th></th>
+                <th>
+
+                </th>
+            </tr>
+
+            @foreach (var deTaiGV in topicofLecture)
+            {
+                var dateLec = new TopicOfLectureModel().dateLec(deTaiGV.topicOfLecture.IdTp);
+
+                if (dateLec == deTaiGV.progressLe.Date)
+                {
+                    var progress = "";
+                    if (deTaiGV.progressLe.Progress == 1)
+                    {
+                        progress = "đang thực hiện";
+                    }
+                    else if (deTaiGV.progressLe.Progress == 2)
+                    {
+                        progress = "quá hạn";
+                    }
+                    else
+                    {
+                        progress = "đã nghiệm thu";
+                    }
+                    <tr>
+                        <td>@stt</td>
+                        @{
+                            stt++;
+                            stt1++;
+                        }
+                        <td style="width:170px; color:blue; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+
+                            @deTaiGV.information.NameLe
+
+                        </td>
+                        <td>
+
+                            @deTaiGV.topicOfLecture.Name
+
+
+                        </td>
+                        <td width="150px">
+
+                            @deTaiGV.pointTable.NameP
+
+
+                        </td>
+
+
+                        <td id="@stt" class="Progress">
+
+                            @progress
+
+                        </td>
+
+                        <td>
+
+                            <div id="@deTaiGV.topicOfLecture.IdTp" class="modal fade" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document" style="max-width:700px">
+                                    <div class="modal-content">
+                                        <div id="myModal">
+                                            <div class="modal-header">
+
+                                                <h4 class="modal-title">Cập nhật hoạt động</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Tên đề tài</label>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-align:left">
+                                                            <p style="font-size:18px; float:left " class="form-control-static"> @deTaiGV.topicOfLecture.Name</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                         
+                                                <div style="margin-top:20px">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Cập nhật tiến độ</label>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            @if (ViewBag.listProgress != null)
+                                                            {
+
+                                                                @Html.DropDownList("Status", ViewBag.listProgress as SelectList, "--Lựa chọn loại tiến độ--", new { @required = "Required" , @Class="form-control" })
+
+                                                            }
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <input type="button" onclick="updateTopic('@deTaiGV.topicOfLecture.IdTp', '@stt')" class="btn btn-primary" value="Lưu" />
+                                            </div>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                            <button style="width:130px; margin-right:10px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#@deTaiGV.topicOfLecture.IdTp" onclick="showpopup('@deTaiGV.topicOfLecture.IdTp')"><i class="fa fa-pen-alt">Cập nhật</i>  </button>
+
+
+                        </td>
+
+
+                    </tr>
+                }
+            }
+
+        </table>
+    </div>
+
+
+</div>
+<script>
+    function updateTopic(IdTp, stt) {
+
+        var Status = $("#Status").val();
+         if ($("#Status" + IdTp).find(":selected").text() != "") {
+             
+            var Status1 = $("#Status").find(":selected").text();
+
+            $('#' + stt).text(Status1);
+
+            $.ajax({
+                type: "POST",
+                url: "/UpdateActivity/UpdateToLe/",
+                data: { IdTp: IdTp, Status: Status },
+
+                dataType: "json",
+                success: function () {
+                    alert("Cập nhật thành công");
+                }
+
+            });
+        }
+    }
+</script>
+
+

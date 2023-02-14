@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    @*@Styles.Render("~/Content/css")*@
+
+
+    <link href="~/Content/chosen.min.css" rel="stylesheet" />
+    <link href="~/Content/chosen.css" rel="stylesheet" />
+
+    <link href="~/assets/client/css/bootstrap.min.css" rel="stylesheet" />
+    
+
+    <link href="~/Content/css/sb-admin.min.css" rel="stylesheet" />
+    <link href="~/Content/css/tabcontrol.css" rel="stylesheet" />
+    <link href="~/Content/css/sb-admin1.css" rel="stylesheet" />
+
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/css/StyleSheet1.css" rel="stylesheet" />
+
+
+    <script src="~/assets/client/js/jquery-1.11.3.min.js"></script>
+    <script src="~/assets/client/js/jquery-ui.js"></script>
+    <script src="~/assets/client/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/js/tabcontrol.js"></script>
+
+
+
+</head>
+<body>
+
+
+    <div class="logo-header">
+
+        <img height="300px" style="width:100%" src="~/images/logotruong1a.jpg" />
+
+    </div>
+    
+
+    <!-- Topbar -->
+
+    <div class="wd-btn-career" style="height: 45px; background: #869dde;">
+        <div class="wd-center" style="background: #284ebb">
+            <ul style="font-weight:bold">
+                <li>
+                    <a href="@Url.Action("NotifiStu", "Notification")">
+                        <span style="font-size:24px; margin-right:10px"><i class="fas fa-home"></i></span>
+                        TRANG CHỦ
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="https://drive.google.com/drive/u/0/folders/1YZKL1USF3pcurNZo_1YReibP_nf7amM2">
+                        <span style="font-size:24px; margin-right:10px"><i class="fab fa-wpforms"></i></span>
+                        biểu mẫu
+                    </a>
+                </li>
+                @{
+                    string session = Session["UserName"] as string;
+                    string acess = Session["Acess"] as string;
+                    if (acess == null)
+                    {
+                        //Url.Action("Index", "Login", 1);
+                        Session["UserName"] = "";
+                        Session["Acess"] = "";
+                        session = Session["UserName"] as string;
+                        acess = Session["Acess"] as string;
+                    }
+
+                }
+                @if (acess.Equals("1") || acess.Equals("2"))
+                {
+                    <li class="notifi" style="background: #f7bf30; padding-right: 300px;">
+
+                        <div class="dropdown" style="margin-left:70px">
+                            <div class="dropbtn" style="color: white; font-weight: bold; width: 200px; height: 45px;">
+                                <span style="font-size:24px; margin-right:10px"><i class="far fa-bell"></i></span>
+
+                                THÔNG BÁO
+                                <i class="fa fa-caret-down"></i>
+                            </div>
+                            <div class="dropdown-content">
+                                <a href="@Url.Action("Index", "Notification")">Thông báo giảng viên</a>
+                                <a href="@Url.Action("NotifiStu", "Notification")">Thông báo sinh viên</a>
+                            </div>
+                        </div>
+
+                    </li>
+                }
+
+                else
+                {
+                    <li>
+                        <a href="@Url.Action("Notifistu", "Notification")">
+                            <span style="font-size:24px; margin-right:10px"><i class="far fa-bell"></i></span>
+                            THÔNG BÁO
+                        </a>
+                    </li>
+                }
+
+
+                @if (session == null || session.ToString().Equals("null"))
+                {
+                    <li class="notifi" style="background: #f7bf30; padding-right: 300px;">
+
+                        <div class="dropdown" style="margin-left:70px">
+                            <div class="dropbtn" style="color: white; font-weight: bold; width: 200px; height: 45px;">
+                                <span style="font-size:24px; margin-right:10px"><i class="fa fa-user"></i></span>
+
+                                ĐĂNG NHẬP
+                                <i class="fa fa-caret-down"></i>
+                            </div>
+                            <div class="dropdown-content">
+                                <a href="@Url.Action("Index", "Login", new { id = "2" })">TRANG GIẢNG VIÊN</a>
+                                <a href="@Url.Action("Index", "Login", new { id = "1" })">PHÒNG NGHIÊN CỨU</a>
+                            </div>
+                        </div>
+
+                    </li>
+                }
+                else
+                {
+                    <li>
+
+                        <a href="@Url.Action("Index", "Login", new { id=Session["Acess"].ToString()})">
+                            <span style="font-size:24px; margin-right:10px"><i class="fa fa-user"></i></span>
+                            đăng xuất
+                        </a>
+                    </li>
+                }
+
+
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2" style="max-width: 19%; border-right: solid 3px blue; background: #3366CC !important ">
+
+            @{
+                string access = Session["Acess"] as string;
+
+            }
+            @if (access.ToString().Equals("1"))
+            {
+                @Html.Partial("_LayoutLeft")
+            }
+            else if (access.ToString().Equals("2"))
+            {
+                @Html.Partial("_LayoutLecture")
+            }
+            //else if (access.ToString().Equals("0"))
+            //{
+
+            //}
+            else
+            {
+                @Html.Partial("LayoutGeneral")
+            }
+        </div>
+        <div class="col-md-9" style="margin-left: 30px; height:auto">
+            @RenderBody()
+        </div>
+    </div>
+    <footer style="background-image:url(../../images/back_foot.jpg); ">
+
+        <div class="row">
+            <div class="col-md-4">
+                <h3 style="padding-left:30px" class="module-title">
+                    Facebook Trường
+                </h3>
+                <div style="margin-top:170px; padding-left:30px">
+                    <small style="color: white">Copyright © 2019 Trường Đại học TDTT Đà Nẵng.</small>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <h3 class="module-title">
+                    www.dsu.edu.vn
+                </h3>
+                <div class="module-ct" style="color: white ">
+                    <div class="custom about">
+                        <div>
+                            <p>Trường Đại học Thể dục Thể thao Đà Nẵng</p>
+                            <p><i class="fa fa-home"> </i> 44 Dũng Sỹ Thanh Khê, Quận Thanh Khê, TP Đà Nẵng</p>
+                            <p><i class="fa fa-phone"> </i>  02363.707188 - Fax : (84).2363.759409</p>
+                            <p><i class="fa fa-envelope"> </i>  Email: tdttdn@dsu.edu.vn</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+      
+    <script src="~/Scripts/chosen.jquery.min.js"></script> 
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="~/js/sb-admin-2.min.js"></script>
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @* @Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+    @*@Scripts.Render("~/bundles/jqueryui")*@
+    @*@Styles.Render("~/Content/themes/base/jquery-ui")*@    
+</body>
+</html>

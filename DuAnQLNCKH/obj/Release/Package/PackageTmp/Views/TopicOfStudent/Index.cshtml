@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+   
+    var topicEnd = (List<DuAnQLNCKH.Models.TopicOfStudentView>)ViewBag.topicEnd;
+}
+
+@using DuAnQLNCKH.Models
+<div class="page-header" style="margin-top:20px">
+    <strong style="color:blue; font-size:26px; font-weight:bold">Danh sách đề tài sinh viên</strong>
+</div>
+<hr />
+  
+<div style="font-size:24px; font-weight:bold; margin-bottom:20px">Đề tài đã nghiệm thu</div>
+
+@if (topicEnd.Count < 1)
+{
+    <div>Không có đề tài nào</div>
+}
+else
+{
+    <table class="table1" style="width:1070px">
+
+        <tr class="headerrow">
+
+            <th>
+                Mã đề tài
+            </th>
+            <th>Tên đề tài</th>
+            <th> Họ tên </th>
+
+            <th>GV hướng dẫn</th>
+            <th>Chuyên sâu</th>
+             <th>
+                Phân loại
+
+            </th>
+            <th>  Ngày bắt đầu </th>
+ 
+            <th>Điểm</th>
+        </tr>
+
+        @foreach (var item in topicEnd)
+        {
+
+            var type = "Khóa luận tốt nghiệp";
+            if (item.topicOfStudent.Type == 1)
+            {
+                type = "NCKH Sinh viên";
+            }
+            <tr>
+                <td>@item.topicOfStudent.IdTp</td>
+                <td style="width:120px">@item.topicOfStudent.Name</td>
+                <td>@item.topicOfStudent.NameSt</td>
+                <td> @item.topicOfStudent.LectureIntruc </td>
+
+                 <td> @item.subject.NameCu </td>
+                 <td>@type</td>
+                <td>@item.topicOfStudent.DateSt.ToString("dd/MM/yyyy")</td>
+                <td>@item.topicOfStudent.Point</td>
+            </tr>
+        }
+    </table>
+
+}

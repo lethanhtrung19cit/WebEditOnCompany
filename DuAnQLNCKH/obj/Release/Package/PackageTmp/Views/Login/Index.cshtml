@@ -1,0 +1,110 @@
+﻿@model DuAnQLNCKH.Models.Account
+
+@{
+    Layout = null;
+    ViewBag.Title = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Đăng nhập hệ thống</title>
+
+    <!-- Custom fonts for this template-->
+   
+
+    <!-- Custom styles for this template-->
+    <link href="~/Content/css/sb-admin.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+    <center> 
+    <div class="container" style="width:540px">
+
+        <!-- Outer Row -->
+        <div class="row">
+
+            <div class="col-md-10 col-md-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div style="width:500px">
+                                <img style="margin-top:20px; width:50%" src="~/images/f4279ad3568395ddcc92.jpg" />
+                            </div>
+                            <div style="width:500px">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        @if (Session["ID"].ToString().Equals("1"))
+                                        {
+                                            <h1 class="h4 text-gray-900 mb-4"> Phòng nghiên cứu </h1>
+                                        }
+                                        else if (Session["ID"].ToString().Equals("2"))
+                                        { <h1 class="h4 text-gray-900 mb-4"> Giảng viên </h1>}
+                                        else
+                                        { <h1 class="h4 text-gray-900 mb-4">Admin </h1>}
+                                    </div>
+                                    @using (Html.BeginForm("Login1", "Login", FormMethod.Post))
+                                    {
+
+                                        <div class="form-group">
+                                            Email 
+                                            @Html.TextBoxFor(a => a.Email, null, new { @class = "form-control form-control-user" })
+                                        </div>
+                                        <div class="form-group">
+                                            Mật khẩu
+                                            @Html.PasswordFor(a => a.PassWord, new { @class = "form-control form-control-user" })
+                                        </div>
+                                        <div class="form-group">
+
+                                            @Html.TextBoxFor(a => a.Access, new { @class = "form-control form-control-user", @type = "hidden", @Value = Session["ID"].ToString() })
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Đăng nhập
+                                        </button>
+                                        @*<a href="@Url.Action("ForgotPassword", "Login")">Quên mật khẩu</a>*@
+                                    }
+                                    <div style="margin-top:30px">
+                                        @Html.ValidationMessage("SessionLogin", "", new { @class = "text-danger" })<br />
+
+                                    </div>
+                                    <a href="@Url.Action("NotifiStu", "Notification")">Trở về trang chủ</a><br />
+                                    @if (Session["ID"].ToString().Equals("1"))
+                                    {
+                                        <a href="@Url.Action("Index", "Login", new { id=2})">Giảng viên đăng nhập </a>
+
+                                    }
+                                    else if (Session["ID"].ToString().Equals("2"))
+                                    {
+                                        <a href="@Url.Action("Index", "Login", new { id=1})">Phòng nghiên cứu đăng nhập </a>
+
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+        </center>
+ 
+  
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "TopicOfLecture";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model DuAnQLNCKH.Models.Type
+
+<div class="form-group">
+    @if (ViewBag.listtype != null)
+    {
+        @Html.DropDownListFor(model => model.IdTy, ViewBag.listtype as SelectList, "--Lựa chọn loại--", new { @class = "form-control" })
+    }
+</div>
+<div class="form-group">
+
+    @Html.DropDownListFor(model => model.IdP, new SelectList(" "), "--Lựa chọn loại--", new { @class = "form-control" })
+
+</div>
+<script>
+    $(document).ready(function () {
+        $("#IdTy").change(function () {
+            $.get("/TopicOfLecture/getTypeList", { IdTy: $("#IdTy").val() }, function (data) {
+                $("#IdP").empty();
+                $.each(data, function (index, row) {
+                    $("#IdP").append("<option value='>" + row.IdP + "'>" + row.NameP + "</option>")
+                });
+            });
+        });
+    });
+</script>
+
+
+
+
+

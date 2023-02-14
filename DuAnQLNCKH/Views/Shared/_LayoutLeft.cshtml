@@ -1,0 +1,101 @@
+﻿
+<ul class="navbar-nav bg-gradient-primary sidebar" id="accordionSidebar">
+
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+           aria-expanded="true" aria-controls="collapseTwo">
+            <img src="~/images/setting-icon-500x500.png" width="35px" height="35px" />
+            <span style="color:white">
+                <b>Tài khoản</b>
+            </span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="@Url.Action("changePassWord", "UserManagement")">Đổi Mật Khẩu</a>
+                <a class="collapse-item" href="@Url.Action("Index", "Login", new { id=Session["Acess"].ToString()})"> Đăng xuất </a>
+            </div>
+        </div>
+    </li>
+
+    <hr class="sidebar-divider">
+
+
+    <li class="nav-item active">
+
+        <a class="nav-link" data-toggle="collapse" data-target="#collapsePages"
+           aria-expanded="true" aria-controls="collapsePages">
+
+            <img src="~/images/open-file-folder-emoji.png" width="30px" height="30px" />
+            <span style="color: white;">Quản lý công trình</span>
+        </a>
+        <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                <a href="@Url.Action("chuaduyet", "TopicOfLecture")" class="collapse-item">
+
+                        Xét duyệt công trình
+                    </a>
+                @*    <a href="@Url.Action("Index", "TopicOfLecture")" class="collapse-item">
+
+                        Công trình đang thực hiện
+                    </a>
+
+                    <a href="@Url.Action("UpdateAcceptance", "UpdateActivity")" class="collapse-item">
+
+                        Nghiệm thu công trình
+                    </a>*@
+                <a href="@Url.Action("listAcceptanced", "TopicOfLecture")" class="collapse-item">
+
+                    Công trình đã nghiệm thu
+                </a>
+
+            </div>
+        </div>
+    </li>
+
+
+
+    <!-- Nav Item - Charts -->
+    <!-- Nav Item - Tables -->
+
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "Statistic")">
+            <img src="~/images/statistics-3679874_960_720 .jpg" width="30px" height="30px" />
+            <span style="color: white">Thống kê danh mục công trình</span>
+        </a>
+    </li>
+     
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "UpdatePoint")">
+            <img src="~/images/44-448540_hours-of-operation-pink-clock-icon-png.png" width="30px" height="30px" />
+            <span style="color: white">Cập Nhật Điểm NCKH</span>
+        </a>
+         
+        <hr class="sidebar-divider d-none d-md-block">
+
+    </li>
+     
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("ViewInputTopicStu", "TopicOfStudent")">
+            <img src="~/images/512px-Circle-icons-pencil_2.svg.png" width="30px" height="30px" />
+            <span style="color: white">Nhập thông tin công trình sinh viên</span>
+        </a>
+         
+        <hr class="sidebar-divider d-none d-md-block">
+
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("listTopicStu", "TopicOfStudent")">
+            <img src="~/images/4901662.png" width="30px" height="30px" />
+            <span style="color: white">Danh sách đề tài sinh viên</span>
+        </a>
+         
+        <hr class="sidebar-divider d-none d-md-block">
+
+    </li>
+     
+    
+</ul>
+  

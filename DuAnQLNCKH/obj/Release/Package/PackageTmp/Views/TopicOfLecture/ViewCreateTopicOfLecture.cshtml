@@ -1,0 +1,534 @@
+﻿
+@{
+    ViewBag.Title = "Đăng ký đề tài";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var DetailTypes = (List<DuAnQLNCKH.Models.PointTable>)ViewBag.listDetailTypes;
+}
+@model DuAnQLNCKH.Models.TopicOfLecture
+@using DuAnQLNCKH.Models;
+@if (new TopicOfLectureModel().checkemail(Session["UserName"].ToString()) == false)
+{
+    <div style="margin:50px 0 0 50px">
+        <h3>Vui lòng cập nhật thông tin để đăng ký đề tài</h3>
+        <a href="@Url.Action("Index", "UserLecture")">Cập nhật thông tin</a>
+    </div>
+}
+else
+{
+    <input id="Names" type="hidden" value="@ViewBag.Names" />
+    <input id="Emails" type="hidden" value="@ViewBag.Emails" />
+    <input id="Hours" type="hidden" value="@ViewBag.Hours" />
+
+    <input id="typeRegisterExist" type="hidden" value="@ViewBag.TypeRegister" />
+
+    <input id="Level" type="hidden" value="@ViewBag.Level" />
+
+    using (Html.BeginForm("CreateTopicOfLecture", "TopicOfLecture", FormMethod.Post, new { @class = "form - horizontal", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.IdTp)
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div style="color:green">
+                @ViewBag.Message
+            </div>
+
+            <div class="form-group">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Tên công trình</div>
+                <div>
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên công trình", @required = "Required" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Đơn vị chủ trì</div>
+                <div>
+                    @Html.DropDownListFor(model => model.IdFa, ViewBag.listFaculty as SelectList, "--Lựa chọn đơn vị chủ trì--", new { @class = "form-control", @required = "Required" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Phân loại</div>
+                @if (ViewBag.listtype != null)
+                {
+
+                    @Html.DropDownList("IdType", ViewBag.listtype as SelectList, "--Lựa chọn phân loại--", new { @class = "form-control", @required = "Required", onchange = "changeName()" })
+
+                }
+            </div>
+            <div class="form-group">
+                <div id="LevelTopic" style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Chi tiết</div>
+                @if (ViewBag.IdDetail == null)
+                {
+                    @Html.DropDownList("IdDetail", new SelectList(""), "--Lựa chọn--", new { @class = "form-control", @required = "Required" })
+                }
+                else
+                {
+                    @Html.DropDownList("IdDetail", ViewBag.ListDetail as SelectList, "", new { @class = "form-control", @required = "Required", @Value = ViewBag.IdDetail })
+
+                }
+            </div>
+            @if (ViewBag.IdChild == null)
+            {
+                <div class="form-group" id="divChild" style="display:none">
+                    <div id="RoleAuthor" style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Chi tiết thành phần</div>
+                    @Html.DropDownList("IdChild", new SelectList(""), "--Lựa chọn--", new { @class = "form-control" })
+                </div>
+            }
+            else
+            {
+                <div class="form-group" id="divChild">
+                    <div id="RoleAuthor" style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Chi tiết thành phần</div>
+                    @Html.DropDownList("IdChild", ViewBag.ListChild as SelectList, "", new { @class = "form-control" })
+
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                            Ngày bắt đầu
+                        </div>
+                        <div>
+
+                            @Html.EditorFor(model => model.DateSt, new { htmlAttributes = new { @Value = "2021-06-23", @class = "form-control", @type = "date", @required = "Required" } })
+                            @Html.ValidationMessageFor(model => model.DateSt, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-left:100px">
+                    <div class="form-group">
+                        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                            Thời gian thực hiện
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.Times, new { htmlAttributes = new { @class = "form-control", @required = "Required", @Style = "width:90px" } })
+                                @Html.ValidationMessageFor(model => model.Times, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-1" style="margin-left:50px">
+                                tháng
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-left:100px">
+                    <div class="form-group">
+                        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Kinh phí</div>
+
+                        <div>
+                            @Html.EditorFor(model => model.Expense, new { htmlAttributes = new { @class = "form-control", @required = "Required", @placeholder = "Nhập kinh phí", @type = "number" } })
+                            @Html.ValidationMessageFor(model => model.Expense, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="author" style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                Tác giả : @ViewBag.NameLe
+                <select onchange="selectRole()" id="Role" class="form-control" style="width: 300px; display: inline-block; margin-bottom: 20px;">
+                    <option value="0">Chủ nhiệm</option>
+                    <option value="1">Thành viên tham gia</option>
+
+                </select>
+                @if (ViewBag.TypeRegister == null || ViewBag.TypeRegister == 0)
+                {
+                    <div id="displayDivAuthor" style="display:none;">
+                        Giờ:
+                        <input type="number" id="hourAuthor" name="HourAu" class="form-control" style="display:none; display:inline-block; width:100px" />
+                    </div>
+                }
+                else
+                {
+                    <div id="displayDivAuthor" style="display: inline-block">
+                        Giờ:
+                        <input type="number" id="hourAuthor" value="@ViewBag.HourAuthor" name="HourAu" class="form-control" style="display:inline-block; width:100px" />
+                    </div>
+                }
+                <script>
+                    function changeName() {
+                        if ($('#IdType').val() == 1) {
+                            $('#LevelTopic').text("Cấp đề tài");
+                            $('#RoleAuthor').text("Vai trò");
+                        }
+                        else {
+                            $('#LevelTopic').text("Chi tiết");
+                            $('#RoleAuthor').text("Chi tiết thành phần");
+                        }
+                    }
+                    function selectRole() {
+                        $('#author').find('div').remove();
+                        if ($('#Role').val() == 1) {
+                            $('#author').append("<div id='divAdmin'>Chủ nhiệm đề tài: <input type='text' class='form-control' style='display:inline-block;width: 250px' name='NameAdmin'/></div> ")
+                            $('#divAdmin').append("Email: <input required type='email' class='form-control' style='display:inline-block;width: 250px' name='EmailAdmin'/>");
+                            $('#divAdmin').append("<div id='divHoursAdmin' style='display: none; width: 100px'> Giờ: <input style='display:inline-block;width:300px' class='form-control' type='number' id='HourAdmin' name='HourAdmin'/></div>");
+                            $('#CountAuthor').val(2);
+                            $('#sttMember').val(2);
+                            $('#NumberAuthor').text(Number.parseInt($('#NumberAuthor').text()) + 1);
+                        }
+                        else {
+                            if ($('#divAdmin') != null) {
+                                $('#divAdmin').remove();
+                                var stt = $('#CountAuthor').val();
+                                stt--;
+                                $('#CountAuthor').val(stt);
+                                $('#sttMember').val(1);
+                                $('#NumberAuthor').text(stt);
+                            }
+                        }
+                    }
+                </script>
+
+            </div>
+            @if (ViewBag.Emails == null)
+            {
+                <input type="hidden" id="sttMember" value="1" />
+            }
+            else
+            {
+                <input type="hidden" id="sttMember" value="@Model.CountAuthor" />
+
+            }
+            <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                Các thành viên : <input id="addM" onclick="addMember()" class="btn btn-group" style="background: #0094ff; font-weight: bold; width:70px; color: white" value="Thêm" />
+            </div>
+            <div id="add">
+
+            </div>
+            <div>
+                <button id="btnSaveHour" class="btn btn-primary" type="button" onclick="exportHour()">Lưu</button>
+            </div>
+            <div class="row">
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                            Số lượng tác giả
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label id="NumberAuthor">1</label>
+                                @Html.HiddenFor(model => model.CountAuthor, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="display:none" id="uploadFile">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                    Upload file minh chứng
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="file" name="FileDemo1" id="FileDemo1" />
+                        @Html.ValidationMessageFor(model => model.FileDemo, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <input name="typeRegister" id="typeRegister" type="hidden" />
+                <label class="selectTypeRegister" style="display:none;border: 1px solid #ccc; padding: 10px; margin: 0 0 10px;">
+                    <input style="width: 20px; height: 20px;" value="2" type="checkbox" name="check" onclick="onlyOne(this, 2)">
+                    Đăng ký xét duyệt
+                </label>
+                <label class="selectTypeRegister" style="display:none;border: 1px solid #ccc; padding: 10px; margin: 0 0 10px;">
+                    <input style="width: 20px; height: 20px;" value="0" type="checkbox" name="check" onclick="onlyOne(this, 0)">
+                    Công bố kết quả
+                </label>
+                <script>
+                    function onlyOne(checkbox, id) {
+                        $('.divHours').show();
+
+                        $('#hourAuthor').show();
+                        $('#divHoursAdmin').css('display', 'inline-block');
+
+                        var checkboxes = document.getElementsByName('check');
+                        $('#typeRegister').val(id);
+                        checkboxes.forEach((item) => {
+                            if (item !== checkbox) item.checked = false;
+                            if (item.checked == true && id == 0) {
+                                $('#displayDivAuthor').show();
+                                $('#displayDivAuthor').css('display', 'inline-block');
+                                $('.divHours').show();
+                                $('#divHoursAdmin').css('display', 'inline-block');
+                                $('#uploadFile').show();
+                                $('#FileDemo1').attr("required", "true");
+                            }
+                            else {
+                                $('#displayDivAuthor').hide();
+                                $('.divHours').hide();
+                                $('#divHoursAdmin').hide();
+                                $('#uploadFile').hide();
+                                $('#FileDemo1').attr("required", false);
+                            }
+                        });
+                    }
+                </script>
+            </div>
+            <div class="form-group">
+                @if (ViewBag.Emails == null)
+                {
+                    <div class="col-md-offset-2 col-md-10">
+                        <input style="background:blue; display:none; font-weight:bold; color:white" type="submit" id="create" value="Đăng ký" class="btn btn-default" />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-offset-2 col-md-10">
+                        <input name="IsUpdate" type="hidden" value="1" />
+                        <input style="background:blue; display:none; font-weight:bold; color:white" type="submit" id="create" value="Cập nhật" class="btn btn-default" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    <script>
+        function exportHour() {
+            var countErr = 0;
+            $('.divValid').remove();
+            $(".selectRole").each(function (item) {
+                var stt = item + 1;
+                if ($('#Role' + stt).val() == 0 || $('#nameAu' + stt).val().trim() == "" || $('#emailAu' + stt).val().trim() == "") {
+                    $('#AuThor' + stt).append('<div class="divValid" style="color:red">Vui lòng nhập đầy đủ thông tin</div>')
+                    countErr++;
+                }
+            });
+            if (countErr == 0) {
+                var NameType = $('#IdType option:selected').text();
+                if (NameType == 'Chủ trì hoặc tham gia các đề tài, dự án nghiên cứu khoa học') {
+                    $.get("/TopicOfLecture/getPoint", { IdDetail: $("#IdDetail").val(), Level: $('#Level').val(), IdChild: $('#IdChild').val() }, function (data) {
+                        $('#hourAuthor').val(data);
+                    })
+                    $.get("/TopicOfLecture/getPointMember", { IdChild: $('#IdChild').val(), IdDetail: $('#IdDetail').val() }, function (data) {
+                        $('.divAuthor').each(function (itemParent) {
+                            var id = $(this).find('select').attr('id');
+                            var role = $('#' + id + ' option:selected').text();
+                            data.forEach(function (item) {
+                                if (item.NameChild == role) {
+                                    var IdAuthor = id.substring(4, id.length);
+                                    $('#AuThor' + IdAuthor).append("<div style='display:none' class='divHours'>Giờ: <input class='form-control' style='display:inline-block;width:100px' name='Hours' value=" + item.Hours + " type='number'/></div></div>")
+                                }
+                            })
+
+                        })
+                        //console.log($('.divAuthor').find('select'));
+                    })
+                    //stt--;
+                    //if ($('#IdChild').val() == 0) {
+                    //    $('#hourAuthor').val(data);
+                    //    $('#hourAdmin').val(data);
+                    //}
+                    //else {
+                    //    $('#hourAdmin').val(data);
+                    //}
+                    //$.get("/TopicOfLecture/getPointMember", { IdDetail: $("#IdDetail").val() }, function (data) {
+                    //    for (var i = 0; i <= stt; i++) {
+                    //        $('#AuThor' + i).append("<span style='display:none' class='divHours'>Giờ: <input class='form-control' style='display:inline-block;width:100px' name='Hours' value=" + data + " type='number'/></span></div>")
+                    //    }
+                    //})
+
+                }
+                else {
+                    $.get("/TopicOfLecture/getPoint", { IdDetail: $("#IdDetail").val(), Level: $('#Level').val(), IdChild: $('#IdChild').val() }, function (data) {
+                        var stt = $('#sttMember').val();
+                        if (stt < 2) {
+                            $('#CountAuthor').val($('#NumberAuthor').text());
+                            $('#hourAuthor').val(data);
+                        }
+                        else {
+                            if (NameType == 'Biên soạn chương trình đào tạo' || NameType == 'Biên soạn giáo trình, sách chuyên khảo, bài giảng, tài liệu tham khảo') {
+
+                                if (confirm("Click 'OK' nếu Chủ biên/Trưởng ban soạn thảo có tham gia đóng góp?")) {
+                                    var h = (Number(data) * 4 / 5) / Number(stt);
+                                    if ($('#Role').val() == 0) {
+                                        $('#hourAuthor').val(parseInt(Number(data) / 5 + Number(h)));
+
+                                    }
+                                    else {
+                                        $('#hourAuthor').val(parseInt(h));
+                                        $('#HourAdmin').val(parseInt(Number(data) / 5 + Number(h)));
+                                    }
+
+                                    for (var i = 0; i < stt; i++) {
+
+                                        $('#AuThor' + i).append("<span style='display:none' class='divHours'> Giờ: <input class='form-control' style='display:inline-block;width:100px' name='Hours' value=" + parseInt(h) + " type='number'/></span></div>")
+                                    }
+                                }
+                                else {
+                                    stt--;
+                                    var h = (Number(data) * 4 / 5) / Number(stt);
+
+                                    if ($('#Role').val() == 0) {
+
+                                        $('#hourAuthor').val(parseInt(Number(data) / 5));
+
+                                    }
+                                    else {
+                                        $('#HourAdmin').val(parseInt(Number(data) / 5));
+                                        $('#hourAuthor').val(parseInt(h));
+                                    }
+
+                                    for (var i = 0; i <= stt; i++) {
+
+                                        $('#AuThor' + i).append("<span style='display:none' class='divHours'>Giờ: <input class='form-control' style='display:inline-block;width:100px' name='Hours' value=" + parseInt(h) + " type='number'/></span></div>")
+                                    }
+                                }
+                            }
+                            else if (NameType == 'Công bố các công trình nghiên cứu trên các tạp chí, hội nghị, hội thảo khoa học trong và ngoài nước') {
+                                stt--;
+                                var h = (Number(data) / 2) / Number(stt);
+                                if ($('#Role').val() == 0) {
+                                    $('#hourAuthor').val(parseInt(Number(data) / 2));
+
+                                }
+                                else {
+                                    $('#HourAdmin').val(parseInt(Number(data) / 2));
+                                    $('#hourAuthor').val(parseInt(h));
+                                }
+                                for (var i = 0; i <= stt; i++) {
+
+                                    $('#AuThor' + i).append("<span style='display:none' class='divHours'>Giờ: <input class='form-control' style='display:inline-block;width:100px' name='Hours' value=" + parseInt(h) + " type='number'/></span></div>")
+                                }
+
+                            }
+                            else if (NameType == 'Hướng dẫn thực hiện đề tài' || NameType == 'Thành tích huấn luyện thi đấu') {
+                                stt--;
+                                for (var i = 0; i <= stt; i++) {
+
+                                    $('#AuThor' + i).append("<span style='display:none' class='divHours'>Giờ: <input class='form-control' style='display:inline-block;width:100px' name='Hours' value=" + data + " type='number'/></span></div>")
+                                }
+
+                                $('#hourAuthor').val(data);
+
+                            }
+                        }
+                    });
+                }
+                $('#addM').hide();
+                $('.selectTypeRegister').show();
+                $('#create').show();
+                $('#btnSaveHour').hide();
+            }
+            
+        }
+        function addMember() {
+            var stt = $('#sttMember').val();
+            $('#NumberAuthor').text(Number.parseInt($('#NumberAuthor').text()) + 1);
+            $('#CountAuthor').val($('#NumberAuthor').text());
+            $('#add').append("<div class=divAuthor id=AuThor" + stt + "> Họ tên : <input id=nameAu"+stt+" name=nameAu class='form-control' style='display:inline-block;width:250px' type='textbox'/>");
+            $('#AuThor' + stt).append("Email : <input name=email id=emailAu" + stt +" class='form-control' style='display:inline-block; width:250px; margin-top:20px;' type='email'/>");
+            if ($('#IdType').val() == 1) {
+                $('#AuThor' + stt).append("<div style='display:inline-block;' class='RoleTopic'>Vai trò : <select class='form-control selectRole' style='display: inline-block; width: 300px' id='Role" + stt + "'></select></div>");
+                $('#Role' + stt).append("<option value='0'>--Select--</option>");
+                $.get("/TopicOfLecture/getPointMember", { IdChild: $('#IdChild').val(), IdDetail: $('#IdDetail').val() }, function (data) {
+                    data.forEach(function (item) {
+                        $('#Role' + stt).append("<option value='" + item.IdChild + "'>" + item.NameChild + "</option>")
+                    })
+                });
+            }
+            var stt1 = stt;
+            stt1++;
+            $('#sttMember').val(stt1);
+        }
+        $(document).ready(function () {
+            $('#IdFa').val('');
+            $('#IdDetail').val('');
+            $('#IdType').val('');
+            if ($.trim($('#Emails').val()) != "") {
+                $('#NumberAuthor').text($('#CountAuthor').val())
+                var listEmail = $('#Emails').val().split(',')
+                var listName = $('#Names').val().split(',')
+                var listHour = $('#Hours').val().split(',')
+                for (var i = 1; i <= listEmail.length; i++) {
+                    $('#add').append("<div id=AuThor" + i + "> Họ tên : <input name=nameAu value='" + listName[i - 1] + "' class='form-control' style='display:inline-block;width:250px' type='textbox'/>")
+                    $('#AuThor' + i).append("Email : <input name=email value='" + listEmail[i - 1] + "' class='form-control' style='display:inline-block; width:250px; margin-top:20px;' type='email'/>")
+                    if ($('#typeRegisterExist').val() == 1) {
+                        $('#AuThor' + i).append("<span class='divHours'>Giờ: <input class='form-control' style='display:inline-block;width:100px' name='Hours' value=" + listHour[i - 1] + " type='number'/></span></div>")
+                    }
+                }
+            }
+            $("#IdType").change(function () {
+                if ($("#IdType").val() == 2 || $("#IdType").val() == 3 || $("#IdType").val() == 4) {
+                    $('#Role').show();
+                    $('.RoleTopic').hide();
+                }
+                else if ($("#IdType").val() == 1) {
+                    $('.RoleTopic').show();
+                }
+                else {
+                    $('#Role').hide();
+                }
+                $("#IdDetail").empty();
+                $.get("/TopicOfLecture/getDetailTypes", { IdType: $("#IdType").val() }, function (data) {
+                    $("#IdDetail").append("<option> -- Lựa chọn -- </option>")
+                    $.each(data, function (index, row) {
+                        $("#IdDetail").append("<option id='IdPi' data-value=" + row.IdDetail + " value='" + row.IdDetail + "'>" + row.NameDetail + "</option>")
+                    });
+                });
+                $.get("/TopicOfLecture/getLevel", { IdType: $("#IdType").val() }, function (data) {
+                    $('#Level').val(data);
+                    var d = $('#Level').val();
+                });
+            });
+            $("#IdDetail").change(function () {
+                if ($('#Level').val() != 0) {
+                    $('#divChild').show();
+                    $("#IdChild").empty();
+                    $.get("/TopicOfLecture/getDetailChilds", { IdDetail: $("#IdDetail").val() }, function (data) {
+                        $("#IdChild").append("<option> -- Lựa chọn -- </option>")
+                        $.each(data, function (index, row) {
+                            $("#IdChild").append("<option data-value=" + row.IdChild + " value='" + row.IdChild + "'>" + row.NameChild + "</option>")
+                        });
+                    });
+                }
+                else {
+                    $('#IdChild').empty();
+                    $('#divChild').hide();
+                }
+                if ($("#IdType").val() == 1) {
+                    $('#Role').hide();
+                }
+            });
+            $('#IdChild').change(function () {
+                $(".selectRole").empty();
+                $.get("/TopicOfLecture/getPointMember", { IdChild: $('#IdChild').val(), IdDetail: $('#IdDetail').val() }, function (data) {
+                    $(".selectRole").append("<option> -- Lựa chọn -- </option>")
+                    data.forEach(function (item) {
+                        $('.selectRole').append("<option value='" + item.IdChild + "'>" + item.NameChild + "</option>")
+                    })
+                });
+            })
+
+        });
+
+        function detailType1(idty) {
+
+            //var name = idty.options[idty.selectedIndex].text;
+            //alert(name);
+
+            var idTy = $(idty.options[idty.selectedIndex]).data().value;
+            alert(idTy);
+            $.ajax({
+
+                type: "POST",
+                url: "/TopicOfLecture/ViewCreateTopicOfLecture/",
+                data: { IdTy: idTy },
+                dataType: "json",
+                success: function () {
+
+                }
+
+            });
+        }
+    </script>
+}

@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Thông tin đề tài";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var detail = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.detail;
+}
+<div>
+    <h4 style="color:red">@ViewBag.Status</h4>
+    
+</div>
+
+<h2>Thông tin công trình nghiên cứu</h2>
+<style>
+    h4 {
+        display: inline-block;
+    }
+</style>
+
+<hr />
+
+@using (Html.BeginForm("Acceptance", "UpdateActivity", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    foreach (var t in detail)
+    {
+        <input name="IdAu1" type="hidden" value="@t.author.IdAu" />
+        <input name="IdTp" type="hidden" value="@t.author.IdTp" />
+        var dateEnd = t.topicOfLecture.DateSt.AddMonths(t.topicOfLecture.Times).ToString("d");
+        <div style="font-size:20px">
+            <div>
+                <h4>Tên công trình</h4> :<b> @t.topicOfLecture.Name </b>
+            </div>
+            <div style="margin-top:20px">
+                <h4>Phân loại</h4> : <b>@t.pointTable.NameP</b>
+            </div>
+
+
+            <div style="margin-top:20px">
+                <h4>Chủ nhiệm đề tài</h4> : <b>@t.information.NameLe</b>
+            </div>
+
+            <div style="margin-top:20px">
+
+                <h4>Điểm tối đa</h4> : <b>@t.pointTable.Value</b>
+            </div>
+            <div style="margin-top:20px">
+                <h4>Giờ chuẩn</h4> : <b>@t.pointTable.MaxTime</b>
+            </div>
+            <div style="margin-top:20px" class="row">
+
+                <div class="col-md-5">
+                    <h4>Điểm cho chủ nhiệm công trình</h4> : <input style="display:inline-block; width:100px" class="form-control" name="p" id="point" type="number" step="0.1" />
+
+                </div>
+                <div class="col-md-5">
+                    <h4>Giờ cho chủ nhiệm công trình</h4> : <input style="display:inline-block; width:100px" class="form-control" name="t" id="time" type="number" />
+
+                </div>
+                <button class="btn btn-primary" type="button" style="margin:10px" onclick="pointMember('@t.topicOfLecture.IdTp', @t.pointTable.Value, @t.pointTable.MaxTime, @t.topicOfLecture.CountAuthor)">In ra điểm và giờ các thành viên</button>
+            </div>
+            <div class="row" id="listMember">
+
+            </div>
+
+            <div style="margin-top:20px">
+                <h4>File thuyết trình đề tài</h4> : <a href="@Url.Action("DownloadFile", "Notification", new { filePath = t.topicOfLecture.FileDemo })">@t.topicOfLecture.FileDemo</a>
+
+            </div>
+            <div style="margin-top:20px">
+                @if (ViewBag.Status == "")
+                {
+                    <button style="width:100px; margin-left:200px" type="submit" class="btn btn-success"> <span class="icon text-white-50"><i class="fas fa-check"> </i></span>  <span><b>Duyệt</b></span>    </button>
+
+                }
+
+            </div>
+
+        </div>
+
+    }
+
+
+
+}
+<script>
+
+    function pointMember(IdTp, pointTopic, timeTopic, CountAuthor) {
+        var count = CountAuthor - 1;
+        var point = $('#point').val();
+        var time = $('#time').val();
+        pointMember1 = (pointTopic - point) / count;
+        timeMember1 = (timeTopic - time) / count;
+
+        $.get("/UpdateActivity/getListMember", { IdTp: IdTp }, function (data) {
+
+            $.each(data, function (index, row) {
+
+                $('#listMember').append("<div class='col-md-10'> <label> Thành viên " + (Number.parseInt(index) + 1) + ": " + row.NameAu + ", Email: " + row.Email + "</label><br> Điểm: <label id=p" + row.IdAu + ">" + pointMember1 + "</label> Giờ: <label id=t" + row.IdAu + ">" + timeMember1 + "</label></div>");
+                $('#listMember').append("<input name=IdAu type='hidden' value=" + row.IdAu + "> <input id=valPoint" + row.IdAu + " type='hidden' name='point'/> <input type='hidden' id=valTime" + row.IdAu + " name='time'/>");
+                var pointval = $('#p' + row.IdAu).text();
+                var timeval = $('#t' + row.IdAu).text();
+                $('#valPoint' + row.IdAu).val(pointval);
+                $('#valTime' + row.IdAu).val(timeval);
+                $('#listMember').append("<div class='col-md-2'><a onclick=edit2('" + row.IdAu + "') class='fa fa-edit'><span class='glyphicon glyphicon-pencil'></span></a></div>");
+                $('#listMember').append("<div id=" + row.IdAu + "></div>");
+            });
+
+        });
+
+    }
+    function edit2(index) {
+        //alert(index);
+        //$('#editMember').append("<label>a</label>");
+        $('#' + index).append("<div id=divEdit" + index + "> Điểm: <input id=ptxt" + index + " style='display:inline-block; width:200px' type='number' step='0.1' class='form-control' type='textbox'/>, Giờ: <input id=ttxt" + index + " style='display:inline-block; width:200px' type='number' class='form-control' type='textbox'/></div>");
+        $('#' + index).append("<button style='width:100px' id=btnsave" + index + " onclick=save('" + index + "') class='btn btn-primary'>Lưu</button>");
+    }
+    function save(index) {
+        var point = $('#ptxt' + index).val();
+        var time = $('#ttxt' + index).val();
+        $('#t' + index).text(time);
+        $('#p' + index).text(point);
+        $('#valPoint' + index).val(point);
+        $('#valTime' + index).val(time);
+        $('#' + index).remove();
+
+        // $('#btnsave' + index).remove();
+    }
+</script>

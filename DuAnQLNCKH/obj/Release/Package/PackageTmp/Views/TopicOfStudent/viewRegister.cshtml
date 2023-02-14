@@ -1,0 +1,212 @@
+﻿
+@{
+    ViewBag.Title = "viewRegister";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@model DuAnQLNCKH.Models.TopicOfStudent
+
+@using (Html.BeginForm("Register", "TopicOfStudent", FormMethod.Post, new { @class = "form - horizontal", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Tên đề tài</div>
+        <div>
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+            Mã sinh viên
+        </div>
+        <div>
+            @Html.EditorFor(model => model.IdSV, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.IdSV, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+            Tên sinh viên
+        </div>
+        <div>
+            @Html.EditorFor(model => model.NameSt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NameSt, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+            Khoa
+        </div>
+        <div>
+            @if (ViewBag.listSubject != null)
+            {
+                @Html.DropDownListFor(model => model.IdSu, ViewBag.listSubject as SelectList, "--Khoa--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdSu, "", new { @class = "text-danger" })
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+            Email
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+            Loại đề tài
+        </div>
+
+        @if (ViewBag.listtype != null)
+        {
+
+            @Html.DropDownList("IdTy", ViewBag.listtype as SelectList, "--Lựa chọn loại--", new { @class = "form-control" })
+
+        }
+    </div>
+    <div class="form-group">
+        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+            Chi tiết loại đề tài
+        </div>
+        @Html.DropDownList("IdP", new SelectList(" "), "--Lựa chọn chi tiết loại--", new { @class = "form-control", onchange = "detailtype();" })
+
+
+    </div>
+    <div class="form-group">
+        <input type="hidden" value="@ViewBag.idp" />
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                    Ngày bắt đầu
+                </div>
+                <div>
+
+                    @Html.EditorFor(model => model.DateSt, new { htmlAttributes = new { @Value = "2021-06-23", @class = "form-control", @type = "date", } })
+                    @Html.ValidationMessageFor(model => model.DateSt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="margin-left:100px">
+            <div class="form-group">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                    Thời gian thực hiện
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.Times, new { htmlAttributes = new { @class = "form-control", @required = "Required" } })
+                        @Html.ValidationMessageFor(model => model.Times, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        tháng
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Kinh phí</div>
+
+                <div>
+                    @Html.EditorFor(model => model.Expense, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập kinh phí" } })
+                    @Html.ValidationMessageFor(model => model.Expense, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5" style="margin-left:100px">
+            <div class="form-group">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                    Số lượng tác giả
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.CountAuthor, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CountAuthor, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+            Giảng viên hướng dẫn
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.LectureIntruc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LectureIntruc, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+    </div>
+    <div class="form-group">
+        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+            Upload file thuyết minh đề tài
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <input type="file" name="FileDemo1" id="FileDemo1" />
+                @Html.ValidationMessageFor(model => model.FileDemo, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input style="background:blue; font-weight:bold; color:white" type="submit" id="create" value="Đăng ký" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+<script>
+    $(document).ready(function () {
+        $("#IdTy").change(function () {
+            $.get("/TopicOfStudent/getTypeList", { IdTy: $("#IdTy").val() }, function (data) {
+                $("#IdP").empty();
+                $.each(data, function (index, row) {
+
+                    $("#IdP").append("<option id='IdPi' data-value=" + row.IdP + " value='" + row.IdP + "'>" + row.NameP + "</option>")
+
+                });
+                
+            });
+        });
+    });
+ 
+
+    $(document).ready(function () {
+        $('input[type=datetime]').datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-60:+0"
+        });
+
+    });
+  
+</script>
+

@@ -1,0 +1,9 @@
+<div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr>
+			<th scope="col">IdTp</th><th scope="col">Name</th><th scope="col">IdLe</th><th scope="col">IdP</th><th scope="col">DateSt</th><th scope="col">Times</th><th scope="col">Expense</th><th scope="col">Status</th><th scope="col">Progress</th>
+		</tr><tr>
+			<td>DTGV07</td><td>Đề t&#224;i nghi&#234;n cứu tạp ch&#237; trong nước</td><td>GV02</td><td>22</td><td>30/12/2020 00:00:00</td><td>1</td><td>60000</td><td>đ&#227; duyệt</td><td>chờ b&#225;o c&#225;o lần 2</td>
+		</tr>
+	</table>
+</div>

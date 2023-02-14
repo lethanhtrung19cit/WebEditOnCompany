@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết đề tài sinh viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var detail = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.listDetail;
+}
+
+<style>
+    h4 {
+        display: inline-block;
+    }
+</style>
+<h2>
+    Chi tiết đề tài 
+</h2>
+<hr />
+@foreach (var t in detail)
+{
+    var dateEnd = t.topicOfStudent.DateSt.AddMonths(t.topicOfStudent.Times).ToString("d");
+    <div style="font-size:20px">
+        <div>
+            <h4>Tên đề tài</h4> :<b> @t.topicOfStudent.Name </b>
+        </div>
+        <div style="margin-top:20px">
+            <h4>Sinh viên thực hiện</h4> : <b>@t.topicOfStudent.NameSt</b>
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6">
+                <h4>Chuyên sâu</h4> :<b> @t.subject.NameCu</b>
+            </div>
+            <div class="col-md-6">
+                <h4>Email</h4> :<b> @t.topicOfStudent.Email</b>
+            </div>
+        </div>
+
+        <div style="margin-top:20px">
+            <h4>Loại đề tài</h4> : <b>@t.pointTable.NameP</b>
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6">
+                <h4>Ngày bắt đầu</h4> :<b> @t.topicOfStudent.DateSt.ToString("d")</b>
+            </div>
+            <div class="col-md-6">
+                <h4>Thời gian thực hiện</h4> :<b> @t.topicOfStudent.Times tháng</b>
+            </div>
+        </div>
+
+        <div style="margin-top:20px">
+            <h4>Ngày hoàn thành</h4> :<b> @dateEnd</b>
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6">
+                <h4>Kinh phí</h4> : <b> @t.topicOfStudent.Expense VND</b>
+            </div>
+            <div class="col-md-6">
+                <h4>Số lượng tác giả</h4> :<b> @t.topicOfStudent.CountAuthor</b>
+            </div>
+        </div>
+
+        <div style="margin-top:20px">
+            <h4>File thuyết trình đề tài</h4> : <a href="@Url.Action("DownloadFile", "Notification", new { filePath = t.topicOfStudent.FileDemo })">@t.topicOfStudent.FileDemo</a>
+
+        </div>
+        <div style="margin-top:20px">
+            <button style="width:100px; margin-left:200px" type="button" class="btn btn-success" onclick="XdBtnClicked('@t.topicOfStudent.IdTp', '@t.topicOfStudent.Name', '@t.topicOfStudent.Email')"> <span class="icon text-white-50"><i class="fas fa-check"> </i></span>  <span><b>Duyệt</b></span>    </button>
+            <button style="width:160px; margin-left:200px" type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectTopic"> <span class="icon text-white-50"><i class="fas fa-times"> </i></span>  <span><b>Không duyệt</b></span>    </button>
+
+        </div>
+    </div>
+
+    <div id="rejectTopic" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="max-width:700px">
+            <div class="modal-content">
+
+                <div id="myModal">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Lí do không duyệt</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Lí do</label>
+                            </div>
+                            <div class="col-md-7">
+
+                                <textarea id="Reason" style="max-width:500px; height:130px; padding-left:10px" class="form-control" required></textarea>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input onclick="rejectTopic('@t.topicOfStudent.IdTp')" type="button" class="btn btn-primary" value="Gửi" />
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+}
+
+<script>
+
+    function XdBtnClicked(IdTp, Name, Email) {
+
+
+        $.ajax({
+            type: "POST",
+            url: "/TopicOfLecture/xetduyetsv/",
+            data: { IdTp: IdTp, NameTo: Name, Email: Email },
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+    function rejectTopic(IdTp) {
+
+        var Reason = $('#Reason').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/TopicOfLecture/rejectTopicSt/",
+            data: { IdTp: IdTp, Reason: Reason},
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+
+
+
+</script>
+
+

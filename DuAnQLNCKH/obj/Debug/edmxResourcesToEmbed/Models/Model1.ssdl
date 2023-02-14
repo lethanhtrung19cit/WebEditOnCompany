@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="nckh_dhdnModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="IdAccount" />
+    </Key>
+    <Property Name="IdAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="PassWord" Type="varchar(max)" />
+    <Property Name="Access" Type="int" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="IdAu" />
+    </Key>
+    <Property Name="IdAu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdTp" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameAu" Type="ntext" />
+    <Property Name="Grade" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="ChildDetail">
+    <Key>
+      <PropertyRef Name="IdChild" />
+    </Key>
+    <Property Name="IdChild" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdDetail" Type="int" Nullable="false" />
+    <Property Name="NameChild" Type="nvarchar(max)" />
+    <Property Name="Hours" Type="int" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="IdKhoa" />
+    </Key>
+    <Property Name="IdKhoa" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="text" />
+  </EntityType>
+  <EntityType Name="DetailStatementLe">
+    <Key>
+      <PropertyRef Name="IdDtST" />
+    </Key>
+    <Property Name="IdDtST" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdSt" Type="int" />
+    <Property Name="IdTp" Type="varchar" MaxLength="10" />
+    <Property Name="Times" Type="int" />
+    <Property Name="Status" Type="ntext" />
+  </EntityType>
+  <EntityType Name="DetailType1">
+    <Key>
+      <PropertyRef Name="IdDetail" />
+    </Key>
+    <Property Name="IdDetail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdType" Type="int" />
+    <Property Name="NameDetail" Type="nvarchar(max)" />
+    <Property Name="Hours" Type="int" />
+  </EntityType>
+  <EntityType Name="Email">
+    <Key>
+      <PropertyRef Name="NameEmail" />
+    </Key>
+    <Property Name="NameEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PassWord" Type="varchar" MaxLength="50" />
+    <Property Name="Id" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Extension">
+    <Key>
+      <PropertyRef Name="IdEx" />
+    </Key>
+    <Property Name="IdEx" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdTp" Type="varchar" MaxLength="10" />
+    <Property Name="Times" Type="date" Nullable="false" />
+    <Property Name="Status" Type="ntext" />
+    <Property Name="Reason" Type="ntext" />
+  </EntityType>
+  <EntityType Name="Faculty">
+    <Key>
+      <PropertyRef Name="IdFa" />
+    </Key>
+    <Property Name="IdFa" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Information">
+    <Key>
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameLe" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="char" MaxLength="10" />
+    <Property Name="DateOfBirth" Type="date" />
+    <Property Name="Address" Type="ntext" />
+    <Property Name="CMND" Type="varchar" MaxLength="14" />
+    <Property Name="IdPo" Type="int" />
+  </EntityType>
+  <EntityType Name="Notification">
+    <Key>
+      <PropertyRef Name="IdNo" />
+    </Key>
+    <Property Name="IdNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DateCreat" Type="datetime" Nullable="false" />
+    <Property Name="PersonCreat" Type="ntext" />
+    <Property Name="Title" Type="ntext" />
+    <Property Name="MetaTitle" Type="text" />
+    <Property Name="Content" Type="ntext" />
+    <Property Name="FileName" Type="text" />
+    <Property Name="Object" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PointTable">
+    <Key>
+      <PropertyRef Name="IdP" />
+    </Key>
+    <Property Name="IdP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdAu" Type="int" />
+    <Property Name="IdTp" Type="varchar" MaxLength="10" />
+    <Property Name="Hours" Type="float" />
+    <Property Name="Grade" Type="tinyint" />
+    <Property Name="Status" Type="tinyint" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="IdPo" />
+    </Key>
+    <Property Name="IdPo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NamePo" Type="ntext" />
+    <Property Name="Hours" Type="float" />
+  </EntityType>
+  <EntityType Name="ProgressLe">
+    <Key>
+      <PropertyRef Name="IdPr" />
+    </Key>
+    <Property Name="IdPr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdTp" Type="varchar" MaxLength="10" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Progress" Type="int" />
+  </EntityType>
+  <EntityType Name="ProgressSt">
+    <Key>
+      <PropertyRef Name="IdPr" />
+    </Key>
+    <Property Name="IdPr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdTp" Type="varchar" MaxLength="10" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Progress" Type="int" />
+  </EntityType>
+  <EntityType Name="Statements">
+    <Key>
+      <PropertyRef Name="IdSt" />
+    </Key>
+    <Property Name="IdSt" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DateRp" Type="date" Nullable="false" />
+    <Property Name="Status" Type="ntext" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="IdSu" />
+    </Key>
+    <Property Name="IdSu" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NameCu" Type="ntext" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TopicOfLecture">
+    <Key>
+      <PropertyRef Name="IdTp" />
+    </Key>
+    <Property Name="IdTp" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="ntext" />
+    <Property Name="DateSt" Type="date" Nullable="false" />
+    <Property Name="Times" Type="int" Nullable="false" />
+    <Property Name="Expense" Type="float" />
+    <Property Name="Status" Type="tinyint" />
+    <Property Name="CountAuthor" Type="int" Nullable="false" />
+    <Property Name="FileDemo" Type="text" />
+    <Property Name="IdType" Type="int" />
+    <Property Name="IdFa" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TopicOfStudent">
+    <Key>
+      <PropertyRef Name="IdTp" />
+    </Key>
+    <Property Name="IdTp" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="ntext" />
+    <Property Name="NameSt" Type="ntext" />
+    <Property Name="DateSt" Type="date" Nullable="false" />
+    <Property Name="IdSu" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="LectureIntruc" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type" Type="tinyint" />
+    <Property Name="Point" Type="float" />
+  </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="IdType" />
+    </Key>
+    <Property Name="IdType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameType" Type="nvarchar(max)" />
+    <Property Name="Level" Type="tinyint" />
+  </EntityType>
+  <Association Name="FK__DetailSta__Statu__3F466844">
+    <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="0..1" />
+    <End Role="DetailStatementLe" Type="Self.DetailStatementLe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TopicOfLecture">
+        <PropertyRef Name="IdTp" />
+      </Principal>
+      <Dependent Role="DetailStatementLe">
+        <PropertyRef Name="IdTp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetailStat__IdSt__403A8C7D">
+    <End Role="Statements" Type="Self.Statements" Multiplicity="0..1" />
+    <End Role="DetailStatementLe" Type="Self.DetailStatementLe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statements">
+        <PropertyRef Name="IdSt" />
+      </Principal>
+      <Dependent Role="DetailStatementLe">
+        <PropertyRef Name="IdSt" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Extension__Times__5165187F">
+    <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="0..1" />
+    <End Role="Extension" Type="Self.Extension" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TopicOfLecture">
+        <PropertyRef Name="IdTp" />
+      </Principal>
+      <Dependent Role="Extension">
+        <PropertyRef Name="IdTp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProgressL__Statu__477199F1">
+    <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="0..1" />
+    <End Role="ProgressLe" Type="Self.ProgressLe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TopicOfLecture">
+        <PropertyRef Name="IdTp" />
+      </Principal>
+      <Dependent Role="ProgressLe">
+        <PropertyRef Name="IdTp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Account_Information">
+    <End Role="Information" Type="Self.Information" Multiplicity="0..1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Information">
+        <PropertyRef Name="Email" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="Email" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Author_TopicOfLecture">
+    <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="1" />
+    <End Role="Author" Type="Self.Author" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TopicOfLecture">
+        <PropertyRef Name="IdTp" />
+      </Principal>
+      <Dependent Role="Author">
+        <PropertyRef Name="IdTp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ChildDetail_DetailType1">
+    <End Role="DetailType1" Type="Self.DetailType1" Multiplicity="1" />
+    <End Role="ChildDetail" Type="Self.ChildDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DetailType1">
+        <PropertyRef Name="IdDetail" />
+      </Principal>
+      <Dependent Role="ChildDetail">
+        <PropertyRef Name="IdDetail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetailType1_Type">
+    <End Role="Type" Type="Self.Type" Multiplicity="0..1" />
+    <End Role="DetailType1" Type="Self.DetailType1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="IdType" />
+      </Principal>
+      <Dependent Role="DetailType1">
+        <PropertyRef Name="IdType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Information_Position1">
+    <End Role="Position" Type="Self.Position" Multiplicity="0..1" />
+    <End Role="Information" Type="Self.Information" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="IdPo" />
+      </Principal>
+      <Dependent Role="Information">
+        <PropertyRef Name="IdPo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PointTable_Author">
+    <End Role="Author" Type="Self.Author" Multiplicity="0..1" />
+    <End Role="PointTable" Type="Self.PointTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="IdAu" />
+      </Principal>
+      <Dependent Role="PointTable">
+        <PropertyRef Name="IdAu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProgressSt_TopicOfStudent">
+    <End Role="TopicOfStudent" Type="Self.TopicOfStudent" Multiplicity="0..1" />
+    <End Role="ProgressSt" Type="Self.ProgressSt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TopicOfStudent">
+        <PropertyRef Name="IdTp" />
+      </Principal>
+      <Dependent Role="ProgressSt">
+        <PropertyRef Name="IdTp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TopicOfLecture_Faculty">
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+    <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faculty">
+        <PropertyRef Name="IdFa" />
+      </Principal>
+      <Dependent Role="TopicOfLecture">
+        <PropertyRef Name="IdFa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TopicOfLecture_Type">
+    <End Role="Type" Type="Self.Type" Multiplicity="0..1" />
+    <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="IdType" />
+      </Principal>
+      <Dependent Role="TopicOfLecture">
+        <PropertyRef Name="IdType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TopicOfStudent_Subject">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="TopicOfStudent" Type="Self.TopicOfStudent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="IdSu" />
+      </Principal>
+      <Dependent Role="TopicOfStudent">
+        <PropertyRef Name="IdSu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="nckh_dhdnModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ChildDetail" EntityType="Self.ChildDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetailStatementLe" EntityType="Self.DetailStatementLe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetailType1" EntityType="Self.DetailType1" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Email" EntityType="Self.Email" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Extension" EntityType="Self.Extension" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Information" EntityType="Self.Information" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PointTable" EntityType="Self.PointTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProgressLe" EntityType="Self.ProgressLe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProgressSt" EntityType="Self.ProgressSt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Statements" EntityType="Self.Statements" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TopicOfLecture" EntityType="Self.TopicOfLecture" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TopicOfStudent" EntityType="Self.TopicOfStudent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__DetailSta__Statu__3F466844" Association="Self.FK__DetailSta__Statu__3F466844">
+      <End Role="TopicOfLecture" EntitySet="TopicOfLecture" />
+      <End Role="DetailStatementLe" EntitySet="DetailStatementLe" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetailStat__IdSt__403A8C7D" Association="Self.FK__DetailStat__IdSt__403A8C7D">
+      <End Role="Statements" EntitySet="Statements" />
+      <End Role="DetailStatementLe" EntitySet="DetailStatementLe" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Extension__Times__5165187F" Association="Self.FK__Extension__Times__5165187F">
+      <End Role="TopicOfLecture" EntitySet="TopicOfLecture" />
+      <End Role="Extension" EntitySet="Extension" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProgressL__Statu__477199F1" Association="Self.FK__ProgressL__Statu__477199F1">
+      <End Role="TopicOfLecture" EntitySet="TopicOfLecture" />
+      <End Role="ProgressLe" EntitySet="ProgressLe" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Account_Information" Association="Self.FK_Account_Information">
+      <End Role="Information" EntitySet="Information" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Author_TopicOfLecture" Association="Self.FK_Author_TopicOfLecture">
+      <End Role="TopicOfLecture" EntitySet="TopicOfLecture" />
+      <End Role="Author" EntitySet="Author" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ChildDetail_DetailType1" Association="Self.FK_ChildDetail_DetailType1">
+      <End Role="DetailType1" EntitySet="DetailType1" />
+      <End Role="ChildDetail" EntitySet="ChildDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetailType1_Type" Association="Self.FK_DetailType1_Type">
+      <End Role="Type" EntitySet="Type" />
+      <End Role="DetailType1" EntitySet="DetailType1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Information_Position1" Association="Self.FK_Information_Position1">
+      <End Role="Position" EntitySet="Position" />
+      <End Role="Information" EntitySet="Information" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PointTable_Author" Association="Self.FK_PointTable_Author">
+      <End Role="Author" EntitySet="Author" />
+      <End Role="PointTable" EntitySet="PointTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProgressSt_TopicOfStudent" Association="Self.FK_ProgressSt_TopicOfStudent">
+      <End Role="TopicOfStudent" EntitySet="TopicOfStudent" />
+      <End Role="ProgressSt" EntitySet="ProgressSt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TopicOfLecture_Faculty" Association="Self.FK_TopicOfLecture_Faculty">
+      <End Role="Faculty" EntitySet="Faculty" />
+      <End Role="TopicOfLecture" EntitySet="TopicOfLecture" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TopicOfLecture_Type" Association="Self.FK_TopicOfLecture_Type">
+      <End Role="Type" EntitySet="Type" />
+      <End Role="TopicOfLecture" EntitySet="TopicOfLecture" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TopicOfStudent_Subject" Association="Self.FK_TopicOfStudent_Subject">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="TopicOfStudent" EntitySet="TopicOfStudent" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

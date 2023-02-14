@@ -1,0 +1,91 @@
+﻿<!-- Main Content -->
+<div id="content" style="float: left">
+    <!-- Sidebar -->
+    <ul style="width: 19% !important" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <!-- Divider -->
+        <!-- Nav Item - Dashboard -->
+        <!-- Divider -->
+        <!-- Heading -->
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <img src="~/images/setting-icon-500x500.png" width="35px" height="35px" />
+                <span style="color:white">
+                    <b>Tài khoản</b>
+                </span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="@Url.Action("Index", "UserLecture")">Cập nhật Thông tin</a>
+                    <a class="collapse-item" href="@Url.Action("changePassWord", "UserLecture")">Đổi Mật Khẩu</a>
+                    <a class="collapse-item" href="@Url.Action("Index", "Login", new { id=Session["Acess"].ToString()})"> Đăng xuất </a>
+                </div>
+            </div>
+        </li>
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+         
+
+
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("myTopicLecture", "TopicOfLecture")">
+                <img src="~/images/mytopic.png" width="35px" height="35px" />
+                <span>Công trình của tôi</span>
+            </a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("ViewCreateTopicOfLecture", "TopicOfLecture")">
+                <img src="~/images/register1.png" width="35px" height="35px" />
+                <span>Đăng ký</span>
+            </a>
+        </li>
+
+      
+         
+        <hr class="sidebar-divider d-none d-md-block">
+ 
+
+    </ul>
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <!-- End of Content Wrapper -->
+
+
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+@*<a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+     Logout Modal
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>*@
+<div style="width:800px; float:right; margin-right:240px">
+
+</div>
+<!-- /.container-fluid -->
+<!-- End of Main Content -->

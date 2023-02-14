@@ -1,0 +1,216 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách công trình đã nghiệm thu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int stt = 1;
+    int sttsv = 1;
+    var listTopicOfStudent = (List<DuAnQLNCKH.Models.TopicOfStudentView>)ViewBag.listAcceptancedStu;
+    var topicofLecture = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.listAcceptancedLec;
+}
+@using DuAnQLNCKH.Models;
+<div style="margin:20px 0 20px 0" class="page-title">
+    <img src="~/images/todo-list-1725465-1465626.png" width="50px" height="50px" />
+    <strong style="font-size:25px">Danh sách công trình đã nghiệm thu</strong>
+</div>
+<hr style="width:1200px" />
+<div class="tabs">
+    <div class="tab-nav-wrapper">
+        <ul>
+            <li class="active"><a href="#tab1">Công trình giảng viên</a></li>
+            <li><a href="#tab2">Công trình sinh viên</a></li>
+
+        </ul>
+    </div>
+    <div class="tab-content-wrapper">
+        <div id="tab1" class="tab-content" style="display:none;">
+            <table class="table1">
+                <tr class="headerrow">
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Nhóm tác giả
+                    </th>
+                    <th style="width:100px">
+                        Tên công trình
+                    </th>
+
+                    <th>
+                        Phân loại
+                    </th>
+                    <th>
+                        Bắt đầu
+                    </th>
+
+                    <th>
+                        Kết thúc
+                    </th>
+                    <th>
+                        Kinh phí
+                    </th>
+                    <th>Xếp loại</th>
+                    <th>Giờ</th>
+                </tr>
+
+                @foreach (var deTaiGV in topicofLecture)
+                {
+                     
+                          
+                    <tr>
+                        <td>@stt</td>
+                        @{
+                            stt++;
+                        }
+                        <td style="width:150px">
+
+                            @foreach (var item in new TopicOfLectureModel().listAuthors(deTaiGV.topicOfLecture.IdTp))
+                            {
+                                if (item.author.Grade == 0)
+                                {
+                                    <div style="font-weight:bold">@item.author.NameAu *</div> 
+                                }
+                                else
+                                {
+                                    <div>@item.author.NameAu</div>
+                                }
+                            }
+
+                        </td>
+                        <td style="width:250px;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+
+                            @deTaiGV.topicOfLecture.Name
+
+                        </td>
+
+                        <td width="150px">
+
+                            @deTaiGV.type.NameType
+
+
+                        </td>
+                        <td>
+                            @deTaiGV.topicOfLecture.DateSt.ToString("d")
+
+                        </td>
+
+                        <td>
+                            @{
+
+                                var dateEnd = deTaiGV.topicOfLecture.DateSt.AddMonths(deTaiGV.topicOfLecture.Times).ToString("d");
+                                <p>@dateEnd</p>
+                            }
+                        </td>
+                        <td>
+
+                            @deTaiGV.topicOfLecture.Expense VNĐ
+
+                        </td>
+
+                        <td>
+                            @{
+                                var grade = "";
+                                foreach (var p in new TopicOfLectureModel().listAuthors(deTaiGV.topicOfLecture.IdTp))
+                                {
+                                    if (p.pointTable.Grade == 1)
+                                    {
+                                        grade = "Đạt";
+                                    }
+                                    else if (p.pointTable.Grade == 2)
+                                    {
+                                        grade = "Khá";
+                                    }
+                                    else if (p.pointTable.Grade == 3)
+                                    {
+                                        grade = "Xuất Sắc";
+                                    }
+                                    else if (p.pointTable.Grade == 0)
+                                    {
+                                        grade = "Không đạt";
+                                    }
+                                }
+                            }
+                            <span>@grade</span>
+                        </td>
+                        <td>
+                            @foreach (var p in new TopicOfLectureModel().listAuthors(deTaiGV.topicOfLecture.IdTp))
+                            {
+                                <div>@p.pointTable.Hours</div>
+                            }
+                        </td>
+                    </tr>
+                     
+                }
+
+
+
+            </table>
+        </div>
+        <div id="tab2" class="tab-content" style="display:none;">
+            <table class="table1" style="width:950px">
+                <tr class="headerrow">
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Tên đề tài
+                    </th>
+                    <th>
+                        Sinh viên thực hiện
+                    </th>
+                    <th>Người hướng dẫn</th>
+                    <th>Ngày thực hiện</th>
+ 
+
+                    
+                    <th>Điểm</th>
+
+                </tr>
+
+                @foreach (var topicOfStudent in listTopicOfStudent)
+                {
+                      
+                         
+                        <tr>
+                            <td>@sttsv</td>
+                            @{
+                                sttsv++;
+                            }
+                            <td style="width:150px">
+
+                                @topicOfStudent.topicOfStudent.Name
+
+                            </td>
+                            <td>
+
+                                @topicOfStudent.topicOfStudent.NameSt
+
+
+                            </td>
+                            <td>@topicOfStudent.topicOfStudent.LectureIntruc</td>
+
+                            <td>
+
+                                @topicOfStudent.topicOfStudent.DateSt.ToString("dd/MM/yyyy")
+
+                            </td>
+                             
+                            <td>
+
+                                @topicOfStudent.topicOfStudent.Point
+
+                            </td>
+                            
+                             
+
+                        </tr>
+                    }
+                }
+
+
+
+            </table>
+        </div>
+
+    </div>
+</div>
+

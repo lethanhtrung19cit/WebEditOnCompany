@@ -1,0 +1,578 @@
+﻿/*GENERAL*/
+body {
+    background: #E9EBEE;
+    font-family: Tahoma, sans-serif;
+    font-size: 12px;
+    color: #000;
+    min-width: 980px;
+    overflow: auto;
+    height: auto;
+}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+    float: left;
+}
+
+.col-xs-12 {
+    width: 100%;
+}
+
+.col-xs-11 {
+    width: 91.66666667%;
+}
+
+.col-xs-10 {
+    width: 83.33333333%;
+}
+
+.col-xs-9 {
+    width: 75%;
+}
+
+.col-xs-8 {
+    width: 66.66666667%;
+}
+
+.col-xs-7 {
+    width: 58.33333333%;
+}
+
+.col-xs-6 {
+    width: 50%;
+}
+
+.col-xs-5 {
+    width: 41.66666667%;
+}
+
+.col-xs-4 {
+    width: 33.33333333%;
+}
+
+.col-xs-3 {
+    width: 25%;
+}
+
+.col-xs-2 {
+    width: 16.66666667%;
+}
+
+.col-xs-1 {
+    width: 8.33333333%;
+}
+
+.col-xs-pull-12 {
+    right: 100%;
+}
+
+.col-xs-pull-11 {
+    right: 91.66666667%;
+}
+
+.col-xs-pull-10 {
+    right: 83.33333333%;
+}
+
+.col-xs-pull-9 {
+    right: 75%;
+}
+
+.col-xs-pull-8 {
+    right: 66.66666667%;
+}
+
+.col-xs-pull-7 {
+    right: 58.33333333%;
+}
+
+.col-xs-pull-6 {
+    right: 50%;
+}
+
+.col-xs-pull-5 {
+    right: 41.66666667%;
+}
+
+.col-xs-pull-4 {
+    right: 33.33333333%;
+}
+
+.col-xs-pull-3 {
+    right: 25%;
+}
+
+.col-xs-pull-2 {
+    right: 16.66666667%;
+}
+
+.col-xs-pull-1 {
+    right: 8.33333333%;
+}
+
+.col-xs-pull-0 {
+    right: auto;
+}
+
+.col-xs-push-12 {
+    left: 100%;
+}
+
+.col-xs-push-11 {
+    left: 91.66666667%;
+}
+
+.col-xs-push-10 {
+    left: 83.33333333%;
+}
+
+.col-xs-push-9 {
+    left: 75%;
+}
+
+.col-xs-push-8 {
+    left: 66.66666667%;
+}
+
+.col-xs-push-7 {
+    left: 58.33333333%;
+}
+
+.col-xs-push-6 {
+    left: 50%;
+}
+
+.col-xs-push-5 {
+    left: 41.66666667%;
+}
+
+.col-xs-push-4 {
+    left: 33.33333333%;
+}
+
+.col-xs-push-3 {
+    left: 25%;
+}
+
+.col-xs-push-2 {
+    left: 16.66666667%;
+}
+
+.col-xs-push-1 {
+    left: 8.33333333%;
+}
+
+.col-xs-push-0 {
+    left: auto;
+}
+
+.col-xs-offset-12 {
+    margin-left: 100%;
+}
+
+.col-xs-offset-11 {
+    margin-left: 91.66666667%;
+}
+
+.col-xs-offset-10 {
+    margin-left: 83.33333333%;
+}
+
+.col-xs-offset-9 {
+    margin-left: 75%;
+}
+
+.col-xs-offset-8 {
+    margin-left: 66.66666667%;
+}
+
+.col-xs-offset-7 {
+    margin-left: 58.33333333%;
+}
+
+.col-xs-offset-6 {
+    margin-left: 50%;
+}
+
+.col-xs-offset-5 {
+    margin-left: 41.66666667%;
+}
+
+.col-xs-offset-4 {
+    margin-left: 33.33333333%;
+}
+
+.col-xs-offset-3 {
+    margin-left: 25%;
+}
+
+.col-xs-offset-2 {
+    margin-left: 16.66666667%;
+}
+
+.col-xs-offset-1 {
+    margin-left: 8.33333333%;
+}
+
+.col-xs-offset-0 {
+    margin-left: 0%;
+}
+#ajax-loader {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 999;
+}
+
+#dialogMain {
+    margin-top: 5px;
+    display: none;
+}
+
+.modal-open {
+    overflow-y: visible;
+}
+
+.nopadding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.nopadding-left {
+    padding-left: 5px;
+}
+
+.checked {
+    background-color: #f0f0f0;
+}
+
+.validation-summary-errors ul {
+    padding-left: 15px;
+    list-style: none;
+}
+/*HEADER*/
+.hitec-navbar {
+    background: #003C6C;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 1px;
+}
+
+.hitec-logo {
+    border-right: 1px solid #fff;
+    padding: 18px 0px;
+    width: 205px;
+}
+
+    .hitec-logo img {
+        width: 55%;
+        margin-top: -10px;
+    }
+
+.hitec-title {
+    background: #353535;
+    padding: 1px;
+}
+
+    .hitec-title h1 {
+        color: #fff;
+        font-family: Arial;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 5px;
+    }
+
+li.dropdown a.dropdown-toggle {
+    font-size: 15px;
+}
+/*SIDEBAR*/
+.hitec-sidebar h5 {
+    font-weight: bold;
+    display: block;
+    padding: 0 0 4px 0;
+    color: #145072;
+    margin-top: 0;
+}
+
+.hitec-sidebar p a:hover, .hitec-notification ul li a:hover {
+    color: #871111;
+    text-decoration: none;
+}
+
+.hitec-information, .hitec-general-function, .hitec-notification {
+    margin-bottom: 20px;
+    margin-right: 2px;
+    border-radius: 2px;
+}
+
+    .hitec-information a, .hitec-general-function a, .hitec-notification a {
+        color: #000;
+    }
+
+        .hitec-information a:hover, .hitec-general-function a:hover, .hitec-notification a:hover {
+            text-decoration: none;
+        }
+
+    .hitec-information p, .hitec-general-function p, .hitec-notification p {
+        margin: 0 0 5px 0;
+        padding: 0 2px 0 0;
+    }
+
+        .hitec-information p img, .hitec-general-function p img, .hitec-notification p img {
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+        }
+
+    .hitec-notification ul {
+        list-style-image: url('images/orther_news.gif');
+        list-style-position: inside;
+        padding-left: 0;
+    }
+
+        .hitec-notification ul li a span {
+            color: #a6a6a6;
+        }
+/*CONTENT*/
+.hitec-year {
+    font-weight: bold;
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 2px;
+    color: #AA4400;
+}
+
+.hitec-content {
+    background: #fff;
+    padding: 5px 10px;
+    min-height: 1100px;
+    border: 1px solid #d9d9d9;
+}
+
+    .hitec-content .row {
+        padding-top: 10px;
+    }
+
+    .hitec-content p.hitec-info, .hitec-content h2 {
+        border-bottom: 1px solid #a4a4a4;
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 16px;
+        padding: 0 0 3px 0;
+        margin: 1px 0 15px 0;
+        color: #004275;
+    }
+
+.hitec-personal-info, .hitec-communications, .hitec-level-info {
+    margin-bottom: 20px;
+}
+
+    .hitec-personal-info p, .hitec-communications p, .hitec-level-info p {
+        border-bottom: 1px dotted #000;
+        color: #b5a6a6;
+        font-weight: bold;
+    }
+
+.hitec-button {
+    float: right;
+    margin-bottom: 20px;
+}
+
+.hitec-table-1 > tbody > tr > td {
+    border: none;
+}
+/* TABLE */
+.table > thead > tr > th {
+    vertical-align: middle;
+    background: #d2d2d2;
+}
+
+.table > tbody > tr > th {
+    vertical-align: middle;
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.table > thead:first-child > tr:first-child > th {
+    /*background: #c3c3c3;*/
+}
+
+.hitec-table-3 > thead > tr > th {
+    text-align: left;
+}
+
+.hitec-td-1 {
+    background: #ffffff;
+}
+
+.hitec-td-2 {
+    background: #F3F3F3;
+}
+
+.hitec-td-3 {
+    background: #fff;
+}
+
+.hitec-td-4 {
+    background: #fff;
+}
+
+.hitec-td-tkbTuan {
+    background: #e7e7e7;
+    font-weight: bold;
+    text-align: center;
+}
+
+.hitec-td-tkbTuanHienTai {
+    background: #f5f5f5;
+}
+
+.hitec-td-tkbSang, .hitec-td-tkbSang a {
+    height: 30px;
+    text-align: center;
+    color: #000;
+}
+
+    .hitec-td-tkbSang a:hover {
+        color: #AA4400;
+    }
+
+.hitec-td-tkbChieu, .hitec-td-tkbChieu a {
+    height: 30px;
+    text-align: center;
+    color: #000;
+}
+
+.hitec-td-tkbToi, .hitec-td-tkbToi a {
+    height: 30px;
+    text-align: center;
+    color: #000;
+}
+/*FOOTER*/
+footer {
+    margin-top: 5px;
+    padding-top: 20px;
+    background: #003056;
+    color: #fff;
+    font-size: 12px;
+}
+
+    footer p {
+        line-height: 10px;
+    }
+
+    footer a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+        footer a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+/*HOC KY TAC NGHIEP*/
+.hitec-form-hocky {
+    border: 1px solid #d9d9d9;
+    padding: 5px;
+    background: #f2f2f2;
+    position: absolute;
+    z-index: 9999;
+    display: none;
+    top: 20px;
+    right: 0px;
+}
+
+a.hover {
+    overflow: auto;
+    display: block;
+}
+
+    a.hover:hover + div.hitec-form-hocky {
+        display: block;
+    }
+
+div.hitec-form-hocky:hover {
+    display: block;
+}
+
+.hitec-fieldset {
+    margin: 5px 5px 10px 5px;
+}
+
+    .hitec-fieldset > legend {
+        color: #808080;
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 1px dotted #ddd;
+        margin-bottom: 5px;
+    }
+
+.hitec-fieldset-for-caption {
+    margin: 5px 5px 5px 5px;
+}
+
+    .hitec-fieldset-for-caption > legend {
+        color: #000000;
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: none;
+        margin-bottom: 5px;
+    }
+
+.hitec-border-bottom-dotted {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px dotted #808080;
+}
+
+hitec-datepicker {
+}
+/* Style of width */
+.hitec-w-25percent {
+    width: 25%;
+}
+
+.hitec-w-50percent {
+    width: 50%;
+}
+
+.hitec-w-75percent {
+    width: 75%;
+}
+
+.hitec-w-100percent {
+    width: 100%;
+}
+
+.hitec-w-95percent {
+    width: 95%;
+}
+
+.unread {
+    font-weight: bold;
+}
+
+.table-cell-title {
+    background: #F2F2F2;
+}
+
+.popup-link {
+    text-decoration: none;
+}
+
+.captcha {
+    width: 200px;
+}
+
+@media screen and (max-width: 768px) {
+    .dropdown-menu a {
+        color: #ffffff !important;
+    }
+}

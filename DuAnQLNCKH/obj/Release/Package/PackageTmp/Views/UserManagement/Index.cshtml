@@ -1,0 +1,167 @@
+﻿@model DuAnQLNCKH.Models.Email
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listInfo = (List<DuAnQLNCKH.Models.Email>)ViewBag.listInfo;
+}
+@Html.ValidationMessage("resultAddEmail", "", new { @class = "text-danger" })
+<br />
+@Html.ValidationMessage("PassWord", "", new { @class = "text-danger" })
+<br />
+<button class="btn btn-primary" style="margin: 20px 0 20px 0" data-toggle="modal" data-target="#addEmail">
+    Đổi email
+</button>
+<div id="addEmail" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:dodgerblue">
+
+                <h4 class="modal-title">Đổi Email</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            @using (Html.BeginForm("addEmail", "UserManagement", FormMethod.Post, new { @class = "form - horizontal" }))
+            {
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                Email :
+                            </div>
+                            <div class="col-md-8">
+
+                                @Html.TextBox("Email", null, new { @class = "form-control", Style = "width:300px", @type = "email" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                Mật khẩu
+                            </div>
+                            <div class="col-md-8">
+                                @Html.Password("PassWord",null, new { Style = "width:300px", @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                Nhập lại Mật khẩu
+                            </div>
+                            <div class="col-md-8">
+                                @Html.Password("PassWord1", null, new { Style = "width:300px", @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Lưu" />
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@Html.ValidationMessage("OldPassword", "", new { @class = "text-danger" })
+<br />
+@Html.ValidationMessage("result", "", new { @class = "text-danger" })
+<br />
+@Html.ValidationMessage("NewPassword", "", new { @class = "text-danger" })
+<br />
+
+<div class="row">
+    <div class="col-md-10" style="font-size:25px; font-weight:bold; margin-bottom:30px">
+        Thông tin Email
+    </div>
+    <div class="col-md-2">
+        <a href="" class="fa fa-edit" data-toggle="modal" data-target="#showmodal">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
+    </div>
+</div>
+@foreach (var item in listInfo)
+{
+    <div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:dodgerblue">
+
+                    <h4 class="modal-title">Đổi mật khẩu</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                @using (Html.BeginForm("editInfo", "UserManagement", FormMethod.Post, new { @class = "form - horizontal" }))
+                {
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Email :
+                                </div>
+                                <div class="col-md-8">
+                                    @item.NameEmail
+                                    @Html.HiddenFor(Model => Model.NameEmail, new { Value = item.NameEmail })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Mật khẩu cũ
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.PasswordFor(Model => Model.PassWord, new { Style = "width:300px", @class = "form-control" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Mật khẩu mới
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.Password("NewPassWord", null, new { @Style = "width:300px", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Nhập lại mật khẩu mới
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.Password("NewPassWord1", null, new { @Style = "width:300px", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Lưu" />
+                    </div>
+                }
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+}
+@foreach (var item in listInfo)
+{
+    <div>
+        <div class="form-group hitec-border-bottom-dotted">
+            <label class="control-label">Email </label>
+            <div>
+                <p class="form-control-static">@item.NameEmail</p>
+            </div>
+        </div>
+
+
+    </div>
+}
+
+
+

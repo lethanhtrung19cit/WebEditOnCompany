@@ -1,0 +1,235 @@
+﻿
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 45px;
+    left: -70px;
+    background-color: #f9f9f9;
+    min-width: 300px;
+    z-index: 1;
+}
+.notifi:hover {
+    background: #4e73df;
+}
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.block {
+    position: relative;
+    width: 1030px;
+}
+@media screen and (max-width: 330px) {
+    .wd-btn-career ul li a {
+        font-size: 14px;
+    }
+
+    .wd-content-container, .wd-list-notify .wd-notify .wd-notify-right .time, ul.wd-list-block-news li .date {
+        font-size: 12px;
+    }
+
+    .list-carousel-2 {
+        padding-bottom: 0;
+        margin-bottom: -15px;
+    }
+}
+.wd-btn-career ul li a .wd-icon-student-01 {
+    background-position: -5px -51px;
+}
+
+
+    .wd-btn-career ul li a {
+        height: 50px;
+        line-height: 50px;
+        font-size: 16px;
+        text-align: left;
+        text-indent: 30px;
+    }
+.wd-btn-career ul li {
+    float: none;
+    width: 100%
+}
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, a, address, em, img, strong, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, thead, tbody, tfoot, tr, th, td {
+    font-family: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+}
+    .wd-btn-career ul li a .wd-icon-30 {
+        float: right;
+        margin: 10px 15px 0;
+    }
+    
+.wd-btn-career ul
+    .wd-btn-career ul li a .wd-icon-30 {
+        float: none;
+        margin: 5px auto 0;
+    }
+
+    .wd-btn-career ul li a {
+        line-height: 26px;
+        text-align: center;
+        padding-top: 2px;
+    }
+.wd-btn-career ul {
+    
+    height: 45px;
+    margin-left:130px;
+}
+
+    .wd-btn-career ul li.last {
+        margin-right: 0;
+    }
+
+    .wd-btn-career ul li {
+        float: left;
+        margin-right: 1px;
+        width: 23%;
+        list-style:none;
+     }
+
+
+        .wd-btn-career ul li a {
+            display: block;
+            background: #f7bf30;
+            color: #fff;
+            width: 100%;
+            height: 45px;
+            line-height: 35px;
+            text-transform: uppercase;
+            text-align: left;
+        }
+
+            .wd-btn-career ul li a:hover {
+                background: #4e73df;
+                text-decoration: none;
+            }
+
+            .wd-btn-career ul li a .wd-icon-30 {
+                background: url(img/front/sprite.png) no-repeat;
+                width: 40px;
+                height: 30px;
+                display: block;
+                float: left;
+                margin: 8px 0 5px 20px;
+            }
+
+            .wd-btn-career ul li a .wd-icon-student-01 {
+                background-position: 1px -51px;
+            }
+
+            .wd-btn-career ul li a .wd-icon-student-02 {
+                background-position: -4px -90px;
+                margin-left: 54px;
+            }
+
+            .wd-btn-career ul li a .wd-icon-student-03 {
+                background-position: -52px -50px;
+                margin-left: 40px;
+            }
+
+            .wd-btn-career ul li a .wd-icon-teacher {
+                background-position: -54px -88px;
+            }
+
+            .wd-btn-career ul li a .wd-icon-business {
+                background-position: -109px -52px;
+                margin-left: 10px;
+            }
+    .block:before, .block:after {
+        content: '';
+        position: absolute;
+        left: -2px;
+        top: -2px;
+        background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000);
+        background-size: 200%;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        z-index: -1;
+        animation: steam 20s linear infinite;
+    }
+a:link, a:visited {
+    color: #0967dc;
+    text-decoration: none
+}
+
+@keyframes steam {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.block:after {
+    filter: blur(50px);
+}
+.tabs {
+    height: auto;
+    width: 1000px;
+    text-align: left;
+}
+.module-title {
+    font-size: 20px;
+    margin-bottom: 25px;
+    color: #fff !important;
+}
+.tab-nav-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    position: relative !important;
+    z-index: 999 !important;
+    top: 3px;
+}
+
+.tabs ul {
+    display: block;
+    /*width: max-content;*/
+    overflow-y: hidden;
+    margin: 0px;
+    padding-inline-start: 5px;
+}
+
+    .tabs ul li {
+        display: inline-block;
+        border: 1px solid grey;
+        border-bottom: 3px solid blue;
+        background-color: white;
+    }
+
+        .tabs ul li.active {
+            border: 1px solid black;
+            border-bottom: 3px solid white;
+            background: #a4a4f3;
+        }
+
+        .tabs ul li a {
+            text-decoration: none;
+            padding: 10px;
+            line-height: 25px;
+            position: relative;
+            font-weight: bold;
+         }
+
+.tab-content-wrapper {
+    position: relative !important;
+    z-index: 1 !important;
+    border: 3px solid #1d4acc;
+    background:#c7c7ea;
+    padding: 20px;
+    min-height: 40px;
+}

@@ -1,0 +1,33 @@
+﻿@model DuAnQLNCKH.Models.TopicOfLecture
+<div class=""model-dialog id="createreport">
+    <div class="modal-dialog"> 
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="createreportlablel">Tạo lịch báo cáo</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="createreport">
+                    <div class="form-group">
+                        <label asp-for="Ngày"></label>
+                        <input type="text" class="datepicker" />
+                    </div>
+                   
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<script>
+   
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>

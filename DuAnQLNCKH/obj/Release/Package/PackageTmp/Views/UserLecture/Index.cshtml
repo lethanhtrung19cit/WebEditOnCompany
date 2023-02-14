@@ -1,0 +1,231 @@
+﻿@model DuAnQLNCKH.Models.Information
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listInfo = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.listInfo;
+}
+<div class="row">
+    <div class="col-md-10" style="font-size:25px; font-weight:bold; margin-bottom:30px">
+        Thông tin chung
+    </div>
+    <div class="col-md-2">
+        <a href="" style="margin-left:100px" class="fa fa-edit" data-toggle="modal" data-target="#showmodal">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
+    </div>
+</div>
+@foreach (var item in listInfo)
+{
+
+    <div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="max-width:800px">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:dodgerblue">
+
+                    <h4 class="modal-title" style="color:white">Sửa thông tin</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                @using (Html.BeginForm("editInfo", "UserLecture", FormMethod.Post, new { @class = "form - horizontal" }))
+                {
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Họ và tên:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(Model => Model.NameLe, new { Value = item.information.NameLe, style = "color:#555555", @Class = "form-control" })
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Số điện thoại:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(Model => Model.Phone, new { Value = item.information.Phone, style = "color:#555555", @Class = "form-control", @type = "number" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Email:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(Model => Model.Email, new { Value = item.information.Email, style = "color:#555555", @Class = "form-control", @type = "email" })
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Ngày sinh:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @if (item.information.DateOfBirth != null)
+                                    {
+                                        @Html.TextBoxFor(Model => Model.DateOfBirth, new { Value = item.information.DateOfBirth.Value.ToString("yyyy-MM-dd"), style = "color:#555555", @Class = "form-control", @type = "date" });
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(Model => Model.DateOfBirth, new { style = "color:#555555", @Class = "form-control", @type = "date" });
+                                    }
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Địa chỉ:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(Model => Model.Address, new { Value = item.information.Address, style = "color:#555555", @Class = "form-control" })
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">CMND:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(Model => Model.Email, new { Value = item.information.CMND, style = "color:#555555", @Class = "form-control", @type = "number" })
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <input type="submit" class="btn btn-primary" value="Cập nhật" />
+                    </div>
+                }
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+}
+@foreach (var item in listInfo)
+{
+
+    <div style="color:black">
+
+        <div class="form-group hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-3">
+                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Họ và tên:</label>
+                </div>
+                <div class="col-md-9">
+                    <p style="font-size:18px" class="form-control-static">@item.information.NameLe</p>
+                </div>
+            </div>
+
+        </div>
+         
+        @*<div class="form-group hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-3">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Cấp độ:</label>
+                </div>
+                <div class="col-md-9">
+                    <p style="font-size:18px" class="form-control-static">@item.level.NameLv</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-3">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Chức danh:</label>
+                </div>
+                <div class="col-md-9">
+                    <p style="font-size:18px" class="form-control-static">@item.grade.NameGr</p>
+                </div>
+            </div>
+
+        </div>*@
+        <div class="form-group hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-3">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Đối tượng:</label>
+                </div>
+                <div class="col-md-9">
+                    <p style="font-size:18px" class="form-control-static">@item.position.NamePo</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-3">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Số điện thoại:</label>
+                </div>
+                <div class="col-md-9">
+                    <p style="font-size:18px" class="form-control-static">@item.information.Phone</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-3">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Email:</label>
+                </div>
+                <div class="col-md-9">
+                    <p style="font-size:18px" class="form-control-static">@item.information.Email</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-3">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Ngày sinh:</label>
+                </div>
+                <div class="col-md-9">
+                    <p style="font-size:18px" class="form-control-static">@if (item.information.DateOfBirth != null) {@item.information.DateOfBirth.Value.ToString("d")}</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-3">
+                    <label style="font-weight:bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color:black" class="control-label">Địa chỉ:</label>
+                </div>
+                <div class="col-md-9">
+                    <p style="font-size:18px" class="form-control-static">@item.information.Address</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-3">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">CMND:</label>
+                </div>
+                <div class="col-md-9">
+                    <p style="font-size:18px" class="form-control-static">@item.information.CMND</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+}
+
+
+

@@ -1,0 +1,150 @@
+﻿@model DuAnQLNCKH.Models.Account
+
+@{ ViewBag.Title = "Tạo tài khoản";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script>
+    function bs_input_file() {
+        $(".input-file").before(
+            function () {
+                if (!$(this).prev().hasClass('input-ghost')) {
+                    var element = $("<input type='file' id='dataFile' name='upload' class='input-ghost' style='visibility:hidden; height:0'>");
+                    element.attr("name", $(this).attr("name"));
+                    element.change(function () {
+                        element.next(element).find('input').val((element.val()).split('\\').pop());
+                    });
+                    $(this).find("button.btn-choose").click(function () {
+                        element.click();
+                    });
+                    $(this).find("button.btn-reset").click(function () {
+                        element.val(null);
+                        $(this).parents(".input-file").find('input').val('');
+                    });
+                    $(this).find('input').css("cursor", "pointer");
+                    $(this).find('input').mousedown(function () {
+                        $(this).parents('.input-file').prev().click();
+                        return false;
+                    });
+                    return element;
+                }
+            }
+        );
+    }
+
+    function clear() {
+        var input = $("#dataFile").val('');
+    };
+    $(function () {
+        clear();
+        bs_input_file();
+    });
+</script>
+@using (Html.BeginForm("ExcelData", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="info2">
+        <h4>Nhập thông tin tài khoản bằng upload file excel</h4>
+        @Html.AntiForgeryToken()
+         <div class="form-group" name="Fichier1">
+             COMPONENT START 
+            <div class="form-group">
+                <div class="input-group input-file">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button">Choose</button>
+                    </span>
+                    <input type="text" class="form-control" placeholder='Choose a file...' />
+
+                </div>
+            </div>
+            
+
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Upload" class="btn btn-default" />
+        </div>
+
+
+
+    </div>
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Thêm Tài Khoản</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                @using (Html.BeginForm("Create", "Admin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal" style="color:black">
+
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <label for="username" class="text-info">Đối tượng</label>
+                            <div class="col-md-10">
+                                @Html.DropDownList("Position", ViewBag.listPosition as SelectList, "--Lựa chọn loại đối tượng--", new { @required = "Required", @Class = "form-control" })
+
+                            </div>
+                        </div>
+
+                       
+
+                        <div class="form-group">
+                            <label for="username" class="text-info">Tên tác giả</label>
+                            <div class="col-md-10">
+                                @Html.TextBox("Name", null, new { @class = "form-control", @required = "Nhập tên tác giả", @placeholder = "Nhập tên tác giả" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="text-info">Email</label>
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @required = "Enter Username", @type = "email", @placeholder = "Nhập email" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>                        
+                        <div class="form-group">
+                            <label for="username" class="text-info">Quyền Truy Cập</label>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.Access, null, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Access, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Thêm Mới" class="btn btn-facebook" />
+                            </div>
+                        </div>
+                    </div>}
+                <hr />
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("<< Quay Lại Danh Sách", "Index")
+</div>
+<script>
+    $(document).ready(function () {
+        $("#Level").change(function () {
+            $.get("/Admin/getListGrade", { IdLv: $("#Level").val() }, function (data) {
+                $("#IdGr").empty();
+                $.each(data, function (index, row) {
+
+                    $("#IdGr").append("<option id='IdGr1' data-value=" + row.IdGr + " value='" + row.IdGr + "'>" + row.NameGr + "</option>")
+
+                });
+
+            });
+        });
+    });
+
+</script>

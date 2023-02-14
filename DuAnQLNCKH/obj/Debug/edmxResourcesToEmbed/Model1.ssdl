@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLNCKHDHTDTDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BangDiem">
+    <Key>
+      <PropertyRef Name="MaDiem" />
+    </Key>
+    <Property Name="MaDiem" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TheLoai" Type="varchar" MaxLength="10" />
+    <Property Name="DiemSo" Type="int" />
+    <Property Name="BatDau" Type="date" />
+    <Property Name="KetThuc" Type="date" />
+  </EntityType>
+  <EntityType Name="DeTaiGV">
+    <Key>
+      <PropertyRef Name="MaDT" />
+    </Key>
+    <Property Name="MaDT" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TenDT" Type="nvarchar" MaxLength="100" />
+    <Property Name="MaGV" Type="varchar" MaxLength="10" />
+    <Property Name="TheLoai" Type="varchar" MaxLength="10" />
+    <Property Name="BatDau" Type="date" />
+    <Property Name="ThoiGian" Type="int" />
+    <Property Name="KinhPhi" Type="float" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DeTaiSV">
+    <Key>
+      <PropertyRef Name="MaDT" />
+    </Key>
+    <Property Name="MaDT" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TenDT" Type="nvarchar" MaxLength="100" />
+    <Property Name="TenSV" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaSV" Type="varchar" MaxLength="10" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="SDT" Type="char" MaxLength="10" />
+    <Property Name="TheLoai" Type="varchar" MaxLength="10" />
+    <Property Name="BatDau" Type="date" />
+    <Property Name="ThoiHan" Type="int" />
+    <Property Name="KinhPhi" Type="float" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="DonVi">
+    <Key>
+      <PropertyRef Name="MaDV" />
+    </Key>
+    <Property Name="MaDV" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="TenKhoa" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="LichBaoCao">
+    <Key>
+      <PropertyRef Name="MaLBC" />
+    </Key>
+    <Property Name="MaLBC" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="MaGV" Type="varchar" MaxLength="10" />
+    <Property Name="NgayTao" Type="date" />
+    <Property Name="NgayBC" Type="date" />
+    <Property Name="GioBC" Type="time" Precision="7" />
+    <Property Name="DiaDiem" Type="nvarchar" MaxLength="100" />
+    <Property Name="NoiDung" Type="nvarchar" MaxLength="1500" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TaiKhoan">
+    <Key>
+      <PropertyRef Name="UseName" />
+    </Key>
+    <Property Name="UseName" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="PassWord" Type="varchar" MaxLength="20" />
+    <Property Name="Quyen" Type="int" />
+  </EntityType>
+  <EntityType Name="TheLoai">
+    <Key>
+      <PropertyRef Name="MaTL" />
+    </Key>
+    <Property Name="MaTL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Ten" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ThongBao">
+    <Key>
+      <PropertyRef Name="MaTB" />
+    </Key>
+    <Property Name="MaTB" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="TieuDe" Type="nvarchar" MaxLength="1000" />
+    <Property Name="NgayTao" Type="date" />
+    <Property Name="MaGV" Type="varchar" MaxLength="10" />
+    <Property Name="Path" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="ThongTinTK">
+    <Key>
+      <PropertyRef Name="MaGV" />
+    </Key>
+    <Property Name="MaGV" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="HoTen" Type="nvarchar" MaxLength="50" />
+    <Property Name="SDT" Type="char" MaxLength="10" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="DonVi" Type="varchar" MaxLength="6" />
+    <Property Name="Uname" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK__BangDiem__KetThu__37A5467C">
+    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="0..1" />
+    <End Role="BangDiem" Type="Self.BangDiem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TheLoai">
+        <PropertyRef Name="MaTL" />
+      </Principal>
+      <Dependent Role="BangDiem">
+        <PropertyRef Name="TheLoai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DeTaiGV__TheLoai__34C8D9D1">
+    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="0..1" />
+    <End Role="DeTaiGV" Type="Self.DeTaiGV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TheLoai">
+        <PropertyRef Name="MaTL" />
+      </Principal>
+      <Dependent Role="DeTaiGV">
+        <PropertyRef Name="TheLoai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DeTaiGV__TrangTh__33D4B598">
+    <End Role="ThongTinTK" Type="Self.ThongTinTK" Multiplicity="0..1" />
+    <End Role="DeTaiGV" Type="Self.DeTaiGV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ThongTinTK">
+        <PropertyRef Name="MaGV" />
+      </Principal>
+      <Dependent Role="DeTaiGV">
+        <PropertyRef Name="MaGV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DeTaiSV__TrangTh__3A81B327">
+    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="0..1" />
+    <End Role="DeTaiSV" Type="Self.DeTaiSV" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TheLoai">
+        <PropertyRef Name="MaTL" />
+      </Principal>
+      <Dependent Role="DeTaiSV">
+        <PropertyRef Name="TheLoai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LichBaoCa__NoiDu__2F10007B">
+    <End Role="ThongTinTK" Type="Self.ThongTinTK" Multiplicity="0..1" />
+    <End Role="LichBaoCao" Type="Self.LichBaoCao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ThongTinTK">
+        <PropertyRef Name="MaGV" />
+      </Principal>
+      <Dependent Role="LichBaoCao">
+        <PropertyRef Name="MaGV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ThongBao__Path__2C3393D0">
+    <End Role="ThongTinTK" Type="Self.ThongTinTK" Multiplicity="0..1" />
+    <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ThongTinTK">
+        <PropertyRef Name="MaGV" />
+      </Principal>
+      <Dependent Role="ThongBao">
+        <PropertyRef Name="MaGV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ThongTinT__DonVi__29572725">
+    <End Role="DonVi" Type="Self.DonVi" Multiplicity="0..1" />
+    <End Role="ThongTinTK" Type="Self.ThongTinTK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DonVi">
+        <PropertyRef Name="MaDV" />
+      </Principal>
+      <Dependent Role="ThongTinTK">
+        <PropertyRef Name="DonVi" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ThongTinT__Uname__286302EC">
+    <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="0..1" />
+    <End Role="ThongTinTK" Type="Self.ThongTinTK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaiKhoan">
+        <PropertyRef Name="UseName" />
+      </Principal>
+      <Dependent Role="ThongTinTK">
+        <PropertyRef Name="Uname" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLNCKHDHTDTDModelStoreContainer">
+    <EntitySet Name="BangDiem" EntityType="Self.BangDiem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeTaiGV" EntityType="Self.DeTaiGV" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeTaiSV" EntityType="Self.DeTaiSV" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DonVi" EntityType="Self.DonVi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LichBaoCao" EntityType="Self.LichBaoCao" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TheLoai" EntityType="Self.TheLoai" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThongBao" EntityType="Self.ThongBao" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThongTinTK" EntityType="Self.ThongTinTK" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__BangDiem__KetThu__37A5467C" Association="Self.FK__BangDiem__KetThu__37A5467C">
+      <End Role="TheLoai" EntitySet="TheLoai" />
+      <End Role="BangDiem" EntitySet="BangDiem" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DeTaiGV__TheLoai__34C8D9D1" Association="Self.FK__DeTaiGV__TheLoai__34C8D9D1">
+      <End Role="TheLoai" EntitySet="TheLoai" />
+      <End Role="DeTaiGV" EntitySet="DeTaiGV" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DeTaiGV__TrangTh__33D4B598" Association="Self.FK__DeTaiGV__TrangTh__33D4B598">
+      <End Role="ThongTinTK" EntitySet="ThongTinTK" />
+      <End Role="DeTaiGV" EntitySet="DeTaiGV" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DeTaiSV__TrangTh__3A81B327" Association="Self.FK__DeTaiSV__TrangTh__3A81B327">
+      <End Role="TheLoai" EntitySet="TheLoai" />
+      <End Role="DeTaiSV" EntitySet="DeTaiSV" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LichBaoCa__NoiDu__2F10007B" Association="Self.FK__LichBaoCa__NoiDu__2F10007B">
+      <End Role="ThongTinTK" EntitySet="ThongTinTK" />
+      <End Role="LichBaoCao" EntitySet="LichBaoCao" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ThongBao__Path__2C3393D0" Association="Self.FK__ThongBao__Path__2C3393D0">
+      <End Role="ThongTinTK" EntitySet="ThongTinTK" />
+      <End Role="ThongBao" EntitySet="ThongBao" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ThongTinT__DonVi__29572725" Association="Self.FK__ThongTinT__DonVi__29572725">
+      <End Role="DonVi" EntitySet="DonVi" />
+      <End Role="ThongTinTK" EntitySet="ThongTinTK" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ThongTinT__Uname__286302EC" Association="Self.FK__ThongTinT__Uname__286302EC">
+      <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+      <End Role="ThongTinTK" EntitySet="ThongTinTK" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,239 @@
+﻿
+@{
+    ViewBag.Title = "viewRegisterExtension";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var topicex = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.topicextension;
+}
+<div class="page-header" style="margin-top:20px">
+
+    <strong style="font-size:26px; font-weight:bold">Yêu cầu gia hạn đề tài</strong>
+</div>
+<hr />
+@foreach (var item in topicex)
+{
+    if (item.extension.Status==null || item.extension.Status.Equals("Đã duyệt"))
+    {
+        <div class="hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-5">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Mã đề tài:</label>
+                </div>
+                <div class="col-md-5">
+                    <p style="font-size:18px" class="form-control-static"> @item.topicOfLecture.IdTp</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-5">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Tên đề tài:</label>
+                </div>
+                <div class="col-md-5">
+                    <p style="font-size:18px" class="form-control-static"> @item.topicOfLecture.Name</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-5">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Ngày bắt đầu:</label>
+                </div>
+                <div class="col-md-5">
+                    <p style="font-size:18px" class="form-control-static"> @item.topicOfLecture.DateSt</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-5">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Thời gian thực hiện đề tài:</label>
+                </div>
+                <div class="col-md-5">
+                    <p style="font-size:18px" class="form-control-static"> @item.topicOfLecture.Times tháng</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        using (Html.BeginForm("registerExtension", "TopicOfLecture", FormMethod.Post))
+        {
+
+            <div class="form-group">
+
+                <input name="IdTp" id="IdTp" type="hidden" value="@item.topicOfLecture.IdTp" />
+            </div>
+
+            <div class="form-group hitec-border-bottom-dotted">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Thời gian gia hạn thêm đến ngày:</label>
+                    </div>
+                    <div class="col-md-5">
+                        <p style="font-size:18px" class="form-control-static"> <input id="Times" name="Times" type="date" value="2021-06-01" /></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group hitec-border-bottom-dotted">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Lí do gia hạn:</label>
+                    </div>
+                    <div class="col-md-5">
+                        <p style="font-size:18px" class="form-control-static"> <textarea style="width:600px" id="Reason" name="Reason" type="text" required></textarea></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <input style="background:blue; font-weight:bold; color:white" type="submit" value="Yêu cầu gia hạn" class="btn btn-default" onclick="yeucau();" />
+
+            </div>
+        }
+        break;
+    }
+    else if (item.extension.Status.Equals("chưa duyệt"))
+    {
+        <div class="hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-5">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Mã đề tài:</label>
+                </div>
+                <div class="col-md-5">
+                    <p style="font-size:18px" class="form-control-static"> @item.topicOfLecture.IdTp</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-5">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Tên đề tài:</label>
+                </div>
+                <div class="col-md-5">
+                    <p style="font-size:18px" class="form-control-static"> @item.topicOfLecture.Name</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-5">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Ngày bắt đầu:</label>
+                </div>
+                <div class="col-md-5">
+                    <p style="font-size:18px" class="form-control-static"> @item.topicOfLecture.DateSt.ToString("dd/MM/yyyy")</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-5">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Thời gian thực hiện đề tài:</label>
+                </div>
+                <div class="col-md-5">
+                    <p style="font-size:18px" class="form-control-static"> @item.topicOfLecture.Times tháng</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-5">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Gia hạn đến ngày:</label>
+                </div>
+                <div class="col-md-5">
+                    <p style="font-size:18px" class="form-control-static"> @item.extension.Times.ToString("dd/MM/yyyy")</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="hitec-border-bottom-dotted">
+            <div class="row">
+                <div class="col-md-5">
+                    <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Lí do gia hạn:</label>
+                </div>
+                <div class="col-md-5">
+                    <p style="font-size:18px" class="form-control-static"> @item.extension.Reason</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Sửa gia hạn đề tài</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    @using (Html.BeginForm("updateExtension", "TopicOfLecture", FormMethod.Post, new { @class = "form - horizontal", enctype = "multipart/form-data" }))
+                    {
+                        <div class="modal-body">
+                            <div class="form-group">
+
+                                <input name="IdTp" id="IdTp" type="hidden" value="@item.topicOfLecture.IdTp" />
+                            </div>
+                            <div class="hitec-border-bottom-dotted">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Thời gian thực hiện đề tài:</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <p style="font-size:18px" class="form-control-static"> @item.topicOfLecture.Times tháng</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div style="margin-top:30px" class="hitec-border-bottom-dotted">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Gia hạn đến ngày:</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="date" name="DateEx" value="@item.extension.Times.ToString("yyyy-MM-dd")" />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div style="margin-top:30px" class="hitec-border-bottom-dotted">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <label style="font-weight: bold; float: right; font-size: 18px; font-family: 'Times New Roman'; color: black" class="control-label">Lí do gia hạn:</label>
+                                    </div>
+                                    <div class="col-md-5">
+
+                                        @Html.TextBox("Reason", null, new { @class = "form-control", @Value = item.extension.Reason, @required = "Required" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Lưu" />
+                        </div>
+                    }
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <button id='addtype' class="btn btn-primary" data-toggle="modal" data-target="#showmodal">Sửa gia hạn</button>
+    }
+
+}
+<script>
+    function yeucau() {
+        alert("Yêu cầu đang được gửi đi");
+        //window.location.url="/TopicOfLecture/viewRegisterExtension"
+    }
+</script>

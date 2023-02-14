@@ -1,0 +1,374 @@
+﻿
+@{
+    ViewBag.Title = "Công trình của tôi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var topicPending = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.topicPending;
+    var topicProgress = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.topicProgress;
+    var topicEnd = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.topicEnd;
+}
+
+@model DuAnQLNCKH.Models.TopicOfLecture
+@using DuAnQLNCKH.Models
+@*<script src="~/assets/client/js/bootstrap.min.js"></script>*@
+<div class="page-header" style="margin-top:20px">
+    <img src="~/images/statistic.png" width="50px" height="50px" />
+    <strong style="color:blue; font-size:26px; font-weight:bold">Danh sách công trình cá nhân </strong>
+</div>
+<hr />
+
+
+<div style="font-size:24px; font-weight:bold; margin-top: 50px; margin-bottom:20px">Công trình đang chờ duyệt</div>
+@if (topicPending.Count < 1)
+{
+    <div>Không có công trình nào</div>
+}
+else
+{
+
+    <table class="table1">
+        <tr class="headerrow">
+            <th>Nhóm tác giả</th>
+            <th>
+                Tên công trình
+            </th>
+            <th>
+                Ngày bắt đầu
+            </th>
+            <th>Ngày kết thúc</th>
+            <th>
+                Chi phí
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in topicPending)
+        {
+            string btnDelete = "btnDelete" + item.topicOfLecture.IdTp;
+            string btnShowDelete = "btnShowDelete" + item.topicOfLecture.IdTp;
+            string btnSave = "btnSave" + item.topicOfLecture.IdTp;
+            string rowPending = "row" + item.topicOfLecture.IdTp;
+            <tr id="@rowPending">
+                <td>
+                    @foreach (var i in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                    {
+                        if (i.author.Grade == 0)
+                        {
+                            <div>@i.author.NameAu (CN)</div>
+                        }
+                        else
+                        {
+                            <div> @i.author.NameAu</div>
+                        }
+                    }
+                </td>
+                <td><a href="@Url.Action("detailTopicLecture", "TopicOfLecture", new { IdTp=item.topicOfLecture.IdTp})">@item.topicOfLecture.Name</a> </td>
+
+                <td> @item.topicOfLecture.DateSt.ToString("d")</td>
+
+                <td>
+                    @{
+
+                        var dateEnd = item.topicOfLecture.DateSt.AddMonths(item.topicOfLecture.Times).ToString("d");
+                        <p>@dateEnd</p>
+                    }
+                </td>
+                <td>@item.topicOfLecture.Expense</td>
+
+                <td>
+                    <button data-idTp="@item.topicOfLecture.IdTp" class="btn btn-primary btnShowDeletePending" id="@btnShowDelete" type="button"><i class="fa fa-trash"></i>Xóa</button>
+                    <div id="@btnDelete" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Xác nhận xóa</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4>
+                                                Bạn có chắc chắn muốn xóa công trình ?
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Không</button>
+                                    <input data-id="@item.topicOfLecture.IdTp" type="button" class="confirmDelete btn btn-primary" value="Có" />
+                                </div>
+
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                </td>
+
+            </tr>
+
+        }
+    </table>
+    <div>
+        --------------------------------------------------------------------------
+    </div>
+}
+<div style="font-size:24px; font-weight:bold; margin-top: 50px; margin-bottom:20px">Công trình đang thực hiện</div>
+@if (topicProgress.Count < 1)
+{
+    <div>Không có công trình nào</div>
+}
+else
+{
+
+    <table class="table1">
+        <tr class="headerrow">
+            <th>Nhóm tác giả</th>
+            <th>
+                Tên công trình
+
+            </th>
+
+            <th>
+                Ngày bắt đầu
+
+            </th>
+
+            <th>Ngày kết thúc</th>
+            <th>
+                Chi phí
+            </th>
+
+
+            <th></th>
+        </tr>
+        @foreach (var item in topicProgress)
+        {
+
+            <tr>
+
+                <td>
+                    @foreach (var i in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                    {
+                        if (i.author.Grade == 0)
+                        {
+                            <div>@i.author.NameAu (CN)</div>
+                        }
+                        else
+                        {
+                            <div> @i.author.NameAu</div>
+                        }
+                    }
+                </td>
+                <td><a href="@Url.Action("detailTopicLecture", "TopicOfLecture", new { IdTp=item.topicOfLecture.IdTp})">@item.topicOfLecture.Name</a> </td>
+
+                <td> @item.topicOfLecture.DateSt.ToString("d")</td>
+
+                <td>
+                    @{
+
+                        var dateEnd = item.topicOfLecture.DateSt.AddMonths(item.topicOfLecture.Times).ToString("d");
+                        <p>@dateEnd</p>
+                    }
+                </td>
+                <td>@item.topicOfLecture.Expense</td>
+
+                <td>
+                    <input class="btn btn-primary" data-toggle="modal" data-target="#@item.topicOfLecture.IdTp" onclick="viewResult('@item.topicOfLecture.IdTp')" type="button" value="Công bố kết quả" />
+                    <div id="@item.topicOfLecture.IdTp" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document" style="max-width:800px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title">Thông tin giờ</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                @using (Html.BeginForm("Register1", "TopicOfLecture", FormMethod.Post, new { @class = "form - horizontal", enctype = "multipart/form-data" }))
+                                {
+                                    string HourAdmin = "HourAdmin" + item.topicOfLecture.IdTp;
+                                    string HourAuthor = "Author" + item.topicOfLecture.IdTp;
+                                    //if (item.type.IdType==3)
+                                    //{
+                                    //    Html.DropDownList("IdChild", new TopicOfLectureModel().listPage(item.DetailType.IdDetail), "", new { @Class = "form-control" });
+
+                                    //}
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <input name="IdTp" value="@item.topicOfLecture.IdTp" type="hidden" />
+                                                @{ foreach (var i in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                                                    {
+                                                        if (new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp).Count > 1)
+                                                        {
+                                                            <h5 style="display: inline-block; margin-right:-150px">@i.author.NameAu (CN)</h5> break;
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <h5 style="display: inline-block">@i.author.NameAu</h5> break;
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="col-md-7">
+                                                <input style="width: 200px; display: inline-block" class="form-control" id="@HourAdmin" name="HourAdmin" type="number" />
+                                            </div>
+                                        </div>
+
+                                        <div id="@HourAuthor" class="row">
+
+                                        </div>
+                                        <div style="margin:20px 0 0 250px">
+
+                                            <h6>Upload file minh chứng</h6>
+                                            <input required="required" type="file" name="FileDemo1" />
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" class="btn btn-primary" value="Lưu" />
+                                    </div>
+                                }
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                </td>
+
+            </tr>
+
+        }
+    </table>
+    <div>
+        --------------------------------------------------------------------------
+    </div>
+}
+
+<div style="font-size:24px; font-weight:bold; margin-top: 50px; margin-bottom:20px">Công trình đã nghiệm thu</div>
+
+@if (topicEnd.Count < 1)
+{
+    <div>Không có công trình nào</div>
+}
+else
+{
+
+    <table class="table1">
+        <tr class="headerrow">
+            <th>
+                Nhóm tác giả
+            </th>
+            <th>
+                Tên công trình
+
+            </th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>
+                Chi phí
+
+            </th>
+            <th>Xếp loại</th>
+            <th>Giờ</th>
+
+        </tr>
+        @foreach (var item in topicEnd)
+        {
+            <tr>
+                <td>
+                    @foreach (var i in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                    {
+                        if (i.author.Grade == 0)
+                        {
+                            <b>@i.author.NameAu (CN)</b>
+                        }
+                        else
+                        {
+                            <br /> @i.author.NameAu
+                        }
+                    }
+                </td>
+                <td>@item.topicOfLecture.Name</td>
+
+                <td> @item.topicOfLecture.DateSt.ToString("d")</td>
+
+
+                <td>
+                    @{
+
+                        var dateEnd = item.topicOfLecture.DateSt.AddMonths(item.topicOfLecture.Times).ToString("d");
+                        <p>@dateEnd</p>
+                    }
+                </td>
+                <td>@item.topicOfLecture.Expense</td>
+                <td>
+                    @{
+                        var grade = "";
+                        foreach (var p in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                        {
+                            if (p.pointTable.Grade == 1)
+                            {
+                                grade = "Đạt";
+                            }
+                            else if (p.pointTable.Grade == 2)
+                            {
+                                grade = "Khá";
+                            }
+                            else if (p.pointTable.Grade == 3)
+                            {
+                                grade = "Xuất Sắc";
+                            }
+                            else if (p.pointTable.Grade == 0)
+                            {
+                                grade = "Không đạt";
+                            }
+                        }
+                    }
+                    <span>@grade</span>
+                </td>
+                <td>
+                    @foreach (var p in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                    {
+                        <div>@p.pointTable.Hours</div>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <div>
+        --------------------------------------------------------------------------
+    </div>
+}  
+<script> 
+    $('.btnShowDeletePending').on('click', function () {
+        var IdTp = $(this).attr('data-idTp');
+        //$('#view-more-pcr-planview-modal').modal('show');
+        $('#btnDelete' + IdTp).modal('show');
+    })
+    $('.confirmDelete').on('click', function () {
+        var IdTp = $(this).attr('data-id');
+        setTimeout(function () {
+            $('#row' + IdTp).remove(); 
+        }, 300) 
+        $('#btnDelete' + IdTp).modal('hide');        
+        $.ajax({
+            type: "POST",
+            url: "/TopicOfLecture/DeleteTopicLecture/",
+            data: { IdTp: IdTp },
+            dataType: "json",
+            success: function (success) {
+                alert("Xóa thành công.")
+            }
+        });
+    })
+    function viewResult(IdTp) {
+
+        $.get("/TopicOfLecture/getHour", { IdTp: IdTp }, function (data) {
+            $('#HourAdmin' + IdTp).val(data[0].Hours);
+            $('#Author' + IdTp).find('.hourAuthorDelete').remove();
+
+            for (var i = 1; i < data.length; i++) {
+                $('#Author' + IdTp).append("<div class='col-md-5 hourAuthorDelete'><h5 style='display: inline-block; margin-right: -150px'>" + data[i].NameAu + "</h5> <input type='hidden' name=IdAu value=" + data[i].IdAu + "></div><div class='col-md-7 hourAuthorDelete'> <input class='form-control' style='display:inline-block;width:200px' name='Hours' value=" + data[i].Hours + " type='number'/></div>");
+            }
+        });
+    }
+</script>
+
+

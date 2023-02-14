@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="nckh_dhdnModel1StoreContainer" CdmEntityContainer="nckh_dhdnEntities7">
+    <FunctionImportMapping FunctionImportName="sp_insert_file" FunctionName="nckh_dhdnModel1.Store.sp_insert_file" />
+  </EntityContainerMapping>
+</Mapping>

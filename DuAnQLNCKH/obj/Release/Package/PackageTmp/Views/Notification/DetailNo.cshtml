@@ -1,0 +1,55 @@
+﻿
+@{ 
+    ViewBag.Title = "DetailNo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var noti = (List<DuAnQLNCKH.Models.Notification>)ViewBag.Notifications;
+    var detail = (List<DuAnQLNCKH.Models.Notification>)ViewBag.Detail; 
+    }
+<div class="page-title">
+    <span class="ums-icon-30 ums-icon-notify "></span>
+    <strong>THÔNG BÁO</strong>
+</div>
+<hr />
+<div style="color: black;
+        font-family: 'times new roman', serif;
+        font-size: large;">
+    @foreach (var item in noti)
+    {
+            <h5 style="color: cornflowerblue">@item.Title</h5>
+            <small>@item.DateCreat</small>
+            <p style="font-style:italic">@item.Content</p>
+    }
+    @foreach (var item in detail)
+    {
+        <p>@item.Content</p>
+        if (item.FileName != null)
+        {
+            <div class="gmail_default" style="font-family: 'times new roman', serif; font-size: large;">Thông tin chi tiết trong các files đính kèm.</div>
+
+        }
+    }
+    <p style="font-style:initial; color:black">Trân trọng thông báo./.</p>
+        <br>
+        @foreach (var item in noti)
+        {    
+            
+
+                if (item.FileName != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <strong>File đính kèm:</strong>
+
+                        <a href="@Url.Action("DownloadFile","Notification",new { filePath = item.FileName})">@item.FileName</a>
+                        <a href="@Url.Action("DownloadFile","Notification",new { filePath = item.FileName})">
+                            <i class="fas fa-download"></i>
+                        </a> 
+                    </div>
+                }
+                else
+                {
+                    <p> </p>
+                }
+
+
+        }
+</div>

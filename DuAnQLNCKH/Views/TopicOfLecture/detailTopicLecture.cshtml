@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết đề tài";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var detail = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.listDetail;
+}
+ @using DuAnQLNCKH.Models 
+<style>
+    h4 {
+        display: inline-block;
+    }
+</style>
+<h2>
+    Chi tiết đề tài
+</h2>
+<hr />
+@foreach (var t in detail)
+{
+    var dateEnd = t.topicOfLecture.DateSt.AddMonths(t.topicOfLecture.Times).ToString("d");
+    <div style="font-size:20px">
+        <div>
+            <h4>Tên đề tài</h4> :<b> @t.topicOfLecture.Name </b>
+        </div>
+        <div style="margin-top:20px">
+            <h4>Nhóm tác giả</h4> : 
+             
+            @foreach (var item in new TopicOfLectureModel().listAu(t.topicOfLecture.IdTp))
+            {
+                if (item.Grade == 0)
+                {
+                    <b>@item.NameAu (CN)</b>  
+                }
+                else
+                {
+                    <b>, @item.NameAu</b>
+                }
+            }
+        
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6">
+                <h4>Khoa</h4> :<b> @t.faculty.Name</b>
+            </div>
+            <div class="col-md-6">
+                <h4>Email</h4> :<b> @t.author.Email</b>
+            </div>
+        </div>
+
+        <div style="margin-top:20px">
+            <h4>Loại đề tài</h4> : <b>@t.type.NameType</b>
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6">
+                <h4>Ngày bắt đầu</h4> :<b> @t.topicOfLecture.DateSt.ToString("d")</b>
+            </div>
+            <div class="col-md-6">
+                <h4>Thời gian thực hiện</h4> :<b> @t.topicOfLecture.Times tháng</b>
+            </div>
+        </div>
+
+        <div style="margin-top:20px">
+            <h4>Ngày hoàn thành</h4> :<b> @dateEnd</b>
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6">
+                <h4>Kinh phí</h4> : <b> @t.topicOfLecture.Expense VND</b>
+            </div>
+            <div class="col-md-6">
+                <h4>Số lượng tác giả</h4> :<b> @t.topicOfLecture.CountAuthor</b>
+            </div>
+        </div>
+
+        <div style="margin-top:20px">
+            <h4>File thuyết trình đề tài</h4> : <a href="@Url.Action("DownloadFile", "Notification", new { filePath = t.topicOfLecture.FileDemo })">@t.topicOfLecture.FileDemo</a>
+
+        </div>
+        <div style="margin-top:20px">
+            @if (t.topicOfLecture.Status == 0 && Session["Acess"].ToString()=="1")
+            {
+
+                <button id="btnApprove" style="width:100px; margin-left:200px" type="button" class="btn btn-success" onclick="XdBtnClicked('@t.topicOfLecture.IdTp')"> <span class="icon text-white-50"><i class="fas fa-check"> </i></span>  <span><b>Duyệt</b></span>    </button>
+               
+                <button id="btnReject" style="width:160px; margin-left:200px" type="button" class="btn btn-danger" onclick="rejectTopic('@t.topicOfLecture.IdTp')"> <span class="icon text-white-50"><i class="fas fa-times"> </i></span>  <span><b>Không duyệt</b></span>    </button>
+            }            
+        </div>
+        <div id="approved" style="display:none; margin-left:150px">
+            <h4 style="color:aquamarine">  Đã duyệt đề tài</h4>
+        </div>
+        <div id="Noapproved" style="display:none; margin-left:150px">
+            <h4 style="color:darkred">  Đã hủy đề tài</h4>
+        </div>
+    </div>
+
+     
+    break;
+}
+
+<script>
+    
+    function XdBtnClicked(IdTp) {
+
+        $('#approved').show();
+        $('#btnApprove').hide();
+        $('#btnReject').hide();
+        $.ajax({
+            type: "POST",
+            url: "/TopicOfLecture/xetduyet2/",
+            data: { IdTp: IdTp },
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+    function rejectTopic(IdTp) {
+        $('#Noapproved').show();
+        $('#btnApprove').hide();
+        $('#btnReject').hide();
+        $.ajax({
+            type: "POST",
+            url: "/TopicOfLecture/rejectTopic/",
+            data: { IdTp: IdTp},
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+
+
+
+</script>

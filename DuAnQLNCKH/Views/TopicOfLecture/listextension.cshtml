@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "listextension";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listextension = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.listextension;
+    var stt = 1;
+
+}
+@using DuAnQLNCKH.Models 
+<style>
+    table td, th{
+        padding:8px;
+    }
+    table tr {
+        border: 1px dotted black;
+    }
+</style>
+<div style="margin:20px 0 20px 0" class="page-title">
+   
+    <strong style="font-size:25px">Gia hạn đề tài</strong>
+</div>
+<hr style="width:1200px" />
+<table class="table1">
+
+    <tr class="headerrow">
+
+        <th>STT</th>
+        <th>Nhóm tác giả</th>
+         
+        <th>
+            Tên công trình
+
+        </th>
+        <th>
+            Phân loại
+
+        </th>
+        <th>  Ngày bắt đầu      </th>
+        
+        <th>Ngày kết thúc</th>
+        <th>
+            Chi phí
+        </th>
+        <th>
+            Trạng thái
+        </th>
+         
+        <th> Gia hạn đến ngày </th>
+        <th>Lí do</th>
+        <th></th>
+    </tr>
+    @foreach (var item in listextension)
+    {
+        var dateLec = new TopicOfLectureModel().dateLec(item.topicOfLecture.IdTp);
+        if (dateLec == item.progressLe.Date)
+        {
+            var progress = "";
+            if (item.progressLe.Progress == 1)
+            {
+                progress = "đang thực hiện";
+            }
+            else if (item.progressLe.Progress == 2)
+            {
+                progress = "quá hạn";
+            }
+            else
+            {
+                progress = "đã nghiệm thu";
+            }
+            var idtp = (String)item.extension.IdTp;
+            var idEx = item.extension.IdEx;
+
+            <tr id="@idEx">
+                 <td>@stt </td>
+                 @{ stt++;}
+                <td style="width:150px">
+                    @foreach (var n in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                    {
+                        if (n.Grade==0)
+                        {
+                            <b>@n.NameAu *</b>
+                        }
+                        else
+                        {
+                            <br/>@n.NameAu
+                        }
+                        
+                    }
+                </td>
+                 
+                <td width="150px">@item.topicOfLecture.Name</td>
+                <td width="120px">@item.pointTable.NameP</td>
+                <td>@item.topicOfLecture.DateSt.ToString("d")</td>
+                 <td>
+                    @{
+                        var dateEnd = item.topicOfLecture.DateSt.AddMonths(item.topicOfLecture.Times).ToString("d");
+                        <p>@dateEnd</p>
+                    }
+                </td>
+                <td>@item.topicOfLecture.Expense</td>
+                 <td>@progress</td>
+                <td>@item.extension.Times.ToString("dd/MM/yyyy")</td>
+
+                <td style="width:200px">@item.extension.Reason</td>
+                <td>
+                     
+                    <button style="width:100px" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" onclick="GhBtnClicked(@idEx, '@item.topicOfLecture.Name', '@item.information.Email')"> <span class="icon text-white-50"><i class="fas fa-check"> </i></span>  <span><b>Duyệt</b></span>    </button>
+
+                </td>
+                 
+            </tr> 
+        }
+        
+    }
+</table>
+<script>
+
+    function GhBtnClicked(IdEx, NameTo, Email) {
+
+       
+
+        //var times = $('td#Times').data().value;
+        //var idtp = $('td#IdTp').data().value;
+
+        var row = $('#' + IdEx);
+
+        row.remove();
+
+        $.ajax({
+
+            type: "POST",
+            url: "/TopicOfLecture/extension/",
+            data: { IdEx: IdEx, NameTo: NameTo, Email:Email },
+            dataType: "json",
+            success: function () {
+                alert('sucess');
+            }
+
+        });
+
+    };
+    function DelBtnClicked() {
+
+
+        var ele = event.srcElement;
+        var id = $(ele).data('id');
+        var row = $('#' + id);
+
+        $.ajax({
+            type: "POST",
+            url: "/TopicOfLecture/Delete/",
+            data: { IdTp: id },
+
+            dataType: "json",
+            success: function () {
+
+                row.remove();
+            }
+        });
+
+
+    }
+    function XdBtnsvClicked() {
+
+        var ele = event.srcElement;
+        var id = $(ele).data('id');
+        var row = $('#' + id);
+        row.remove();
+        $.ajax({
+            type: "POST",
+            url: "/TopicOfLecture/xetduyetsv/",
+            data: { IdTp: id },
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+</script>

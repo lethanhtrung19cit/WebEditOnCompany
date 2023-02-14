@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách đề tài sinh viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listTopicNCKH = (List<DuAnQLNCKH.Models.TopicOfStudent>)ViewBag.listTopicNCKH;
+    var listTopicKLTN = (List<DuAnQLNCKH.Models.TopicOfStudent>)ViewBag.listTopicKLTN;
+    var sttNCKH = 1;
+    var sttKLTN = 1;
+}
+@model DuAnQLNCKH.Models.TopicOfStudent
+@using System.Data
+
+<script>
+    function bs_input_file() {
+        $(".input-file").before(
+            function () {
+                if (!$(this).prev().hasClass('input-ghost')) {
+                    var element = $("<input type='file' id='dataFile' name='upload' class='input-ghost' style='visibility:hidden; height:0'>");
+                    element.attr("name", $(this).attr("name"));
+                    element.change(function () {
+                        element.next(element).find('input').val((element.val()).split('\\').pop());
+                    });
+                    $(this).find("button.btn-choose").click(function () {
+                        element.click();
+                    });
+                    $(this).find("button.btn-reset").click(function () {
+                        element.val(null);
+                        $(this).parents(".input-file").find('input').val('');
+                    });
+                    $(this).find('input').css("cursor", "pointer");
+                    $(this).find('input').mousedown(function () {
+                        $(this).parents('.input-file').prev().click();
+                        return false;
+                    });
+                    return element;
+                }
+            }
+        );
+    }
+
+    function clear() {
+        var input = $("#dataFile").val('');
+    };
+    $(function () {
+        clear();
+        bs_input_file();
+    });
+</script>
+@if (Session["Acess"] == null || Session["Acess"].ToString() != "null")
+{
+    using (Html.BeginForm("ExcelData", "TopicOfStudent", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+<div class="info2">
+    <a href="@Url.Action("DownloadFile","Notification",new { filePath = "/UpLoadFile/File Mau Nhap Cong trinh sinh vien"})">
+        <h4>Nhập thông tin đề tài sinh viên khóa luận tốt nghiệp bằng Upload file Excel</h4>
+        </a>
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="type" value="1" />
+        <div class="form-group" name="Fichier1">
+            <!-- COMPONENT START -->
+            <div class="form-group">
+                <div class="input-group input-file">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button">Choose</button>
+                    </span>
+                    <input type="text" class="form-control" placeholder='Choose a file...' />
+
+                </div>
+            </div>
+            @*<input type="file" id="dataFile" name="upload" />*@
+
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Upload" class="btn btn-default" />
+        </div>
+
+
+
+</div>
+
+    }
+    using (Html.BeginForm("ExcelData", "TopicOfStudent", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+<div class="info2">
+    <a href="@Url.Action("DownloadFile","Notification",new { filePath = "/UpLoadFile/File Mau Nhap Cong trinh sinh vien.xlsx"})">
+        <h4>Nhập thông tin đề tài sinh viên NCKH bằng Upload file Excel</h4>
+        </a>
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="type" value="0" />
+        <div class="form-group" name="Fichier1">
+            <!-- COMPONENT START -->
+            <div class="form-group">
+                <div class="input-group input-file">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button">Choose</button>
+                    </span>
+                    <input type="text" class="form-control" placeholder='Choose a file...' />
+
+                </div>
+            </div>
+            @*<input type="file" id="dataFile" name="upload" />*@
+
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Upload" class="btn btn-default" />
+        </div>
+
+
+</div>
+    }
+}
+
+
+
+@if (listTopicNCKH.Count > 0)
+{
+    <h2>Danh sách đề tài sinh viên NCKH</h2>
+
+
+    <table id="table1" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+
+                <th>STT</th>
+                <th>Tên Đề Tài</th>
+                <th>Sinh Viên Thực Hiện</th>
+                <th>Giảng Viên Hướng Dẫn</th>
+                <th>Ngày Bắt Đầu</th>
+                <th>Điểm</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in listTopicNCKH)
+            {
+                <tr>
+                    <td>@sttKLTN</td>
+                    <td>@row.Name</td>
+                    <td>@row.NameSt</td>
+                    <td>@row.LectureIntruc</td>
+                    <td>@row.DateSt.ToString("d")</td>
+                    <td>@row.Point</td>
+                </tr>
+                sttNCKH++;
+            }
+        </tbody>
+    </table>
+}
+@if (listTopicKLTN.Count > 0)
+{
+    <h2>Danh sách đề tài sinh viên Khóa luận tốt nghiệp</h2>
+
+    <table id="table1" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+
+                <th>STT</th>
+                <th>Tên Đề Tài</th>
+                <th>Sinh Viên Thực Hiện</th>
+                <th>Giảng Viên Hướng Dẫn</th>
+                <th>Ngày Bắt Đầu</th>
+                <th>Điểm</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in listTopicKLTN)
+            {
+                <tr>
+                    <td>@sttKLTN</td>
+                    <td>@row.Name</td>
+                    <td>@row.NameSt</td>
+                    <td>@row.LectureIntruc</td>
+                    <td>@row.DateSt.ToString("d")</td>
+                    <td>@row.Point</td>
+                </tr>
+                sttKLTN++;
+            }
+        </tbody>
+    </table>
+}
+
+
+
+

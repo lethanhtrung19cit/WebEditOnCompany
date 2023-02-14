@@ -1,0 +1,302 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách đề tài";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int stt = 1;
+    int sttsv = 1;
+    var listTopicOfStudent = (List<DuAnQLNCKH.Models.TopicOfStudentView>)ViewBag.listTopicOfStudent;
+    var topicofLecture = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.TopicOfLecture;
+}
+ @using DuAnQLNCKH.Models;
+<div style="margin:20px 0 20px 0" class="page-title">
+    <img src="~/images/todo-list-1725465-1465626.png" width="50px" height="50px" />
+    <strong style="font-size:25px">Danh sách đề tài đang thực hiện</strong>
+</div>
+<hr style="width:1200px" />
+<div class="tabs">
+    <div class="tab-nav-wrapper">
+        <ul>
+            <li class="active"><a href="#tab1">Đề tài giảng viên</a></li>
+            <li><a href="#tab2">Đề tài sinh viên</a></li>
+
+        </ul>
+    </div>
+    <div class="tab-content-wrapper">
+        <div id="tab1" class="tab-content" style="display:none;">
+            <input type="text" id="SearchLec" placeholder="Tìm kiếm đề tài giảng viên" class="form-control"/>
+            <table class="table1">
+                <tr class="headerrow">
+                   <th>
+                       STT
+                   </th>
+                    <th>
+                        Nhóm tác giả
+                    </th>
+                     <th style="width:100px">
+                        Tên công trình
+                    </th>
+                    
+                    <th>
+                        Phân loại
+                    </th>
+                    <th>
+                        Bắt đầu
+                    </th>
+                     
+                    <th>
+                        Kết thúc
+                    </th>
+                    <th>
+                        Kinh phí
+                    </th>
+                     
+                    <th>
+                        Trạng thái
+                    </th>
+                    <th>
+                        Thời gian gia hạn thêm
+                    </th>
+                    
+                </tr>
+               
+                @foreach (var deTaiGV in topicofLecture)
+                {
+                    var dateLec = new TopicOfLectureModel().dateLec(deTaiGV.topicOfLecture.IdTp);
+                    if (dateLec == deTaiGV.progressLe.Date)
+                    {
+                        var progress = "đã nghiệm thu";
+                        if (deTaiGV.progressLe.Progress == 1)
+                        {
+                            progress = "đang thực hiện";
+                        }
+                        else if (deTaiGV.progressLe.Progress == 2)
+                        {
+                            progress = "quá hạn";
+                        }
+                        
+                        <tr class="SearchLec">
+                             <td>@stt</td>
+                            @{
+                                stt++;
+                            }
+                            <td>
+                                 
+                                @foreach (var item in new TopicOfLectureModel().listAuthors(deTaiGV.topicOfLecture.IdTp))
+                                {
+                                    if (item.author.Grade==0)
+                                    { 
+                                        <b>@item.author.NameAu *</b> <br />
+                                    }
+                                    else
+                                    {
+                                        <br /> @item.author.NameAu
+                                    }
+                                }
+
+                            </td>
+                             <td class="nameTpLec" style="width:150px;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+
+                                @deTaiGV.topicOfLecture.Name
+
+                            </td>
+                        
+                            <td width="150px">
+
+                                @*@deTaiGV.pointTable.NameP*@
+
+
+                            </td>
+                            <td>
+                                @deTaiGV.topicOfLecture.DateSt.ToString("d")
+
+                            </td>
+                             
+                            <td>
+                                @{ 
+ 
+                                    var dateEnd =  deTaiGV.topicOfLecture.DateSt.AddMonths(deTaiGV.topicOfLecture.Times).ToString("d");
+                                    <p>@dateEnd</p>
+                                }
+                            </td>
+                            <td>
+
+                                @deTaiGV.topicOfLecture.Expense VNĐ
+
+                            </td>
+                        
+                            <td>
+
+                                @progress
+
+                            </td>
+                            <td width="150px">
+                                @{string a = null; }
+                                @if (deTaiGV.extension.Status == null)
+                                {
+                                    a = "không có".ToString();
+
+                                }
+                                else if (deTaiGV.extension.Status.Equals("Đã duyệt"))
+                                {
+
+                                    a = deTaiGV.extension.Times.ToString("d");
+                                }
+                                else
+                                {
+                                    a = "không có".ToString();
+                                }
+                                @a
+                            </td>
+                      
+
+                        </tr>
+                     }
+                }
+
+
+
+            </table>
+
+        </div>
+        <div id="tab2" class="tab-content" style="display:none;">
+            <input type="text" id="SearchStu" placeholder="Tìm kiếm đề tài sinh viên" class="form-control" />
+
+            <table class="table1">
+                <tr class="headerrow">
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Sinh viên
+                    </th>
+                    <th>
+                        Chuyên sâu
+                    </th>
+                    <th>
+                        Tên đề tài
+                    </th>
+
+                    <th>GV hướng dẫn</th>
+                    <th>
+                        Loại đề tài
+                    </th>
+                    <th>
+                        Bắt đầu
+                    </th>
+                    <th>
+                        Thời gian
+                    </th>
+                    <th>Kết thúc</th>
+                    <th>
+                        Kinh phí
+                    </th>
+
+                    <th>
+                        Trạng thái
+                    </th>
+
+                </tr>
+
+                @foreach (var topicOfStudent in listTopicOfStudent)
+                {
+                    
+                        <tr class="SearchStu">
+                            <td>@sttsv</td>
+                            @{
+                                sttsv++;
+                            }
+                            <td>
+
+                                @topicOfStudent.topicOfStudent.NameSt
+
+
+                            </td>
+                            <td>@topicOfStudent.subject.NameCu</td>
+
+                            <td class="nameTpStu" style="width:150px">
+
+                                @topicOfStudent.topicOfStudent.Name
+
+                            </td>
+                            <td>@topicOfStudent.topicOfStudent.LectureIntruc</td>
+
+                            <td>
+
+                                @*@topicOfStudent.pointTable.NameP*@
+
+                            </td>
+                            <td>
+
+                                @topicOfStudent.topicOfStudent.DateSt.ToString("d")
+
+                            </td>
+                            <td>
+
+                                @*@topicOfStudent.topicOfStudent.Times tháng*@
+
+                            </td>
+                            <td>
+                                @*@{
+
+                                    var dateEnd = topicOfStudent.topicOfStudent.DateSt.AddMonths(topicOfStudent.topicOfStudent.Times).ToString("d");
+                                    <p>@dateEnd</p>
+                                }*@
+                            </td>
+                            <td>
+
+                                @*@topicOfStudent.topicOfStudent.Expense VNĐ*@
+
+                            </td>
+
+                            <td>
+
+                                @*@progress*@
+
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    
+    function Contains(text_one, text_two) {
+        if (text_one.indexOf(text_two) != -1)
+            return true;
+    }
+
+     
+
+    $("#SearchLec").keyup(function () {
+        var searchText = $("#SearchLec").val().toLowerCase();
+
+        $(".SearchLec").each(function () {
+            var id = $(this).find(".nameTpLec");
+
+            if (Contains($(id).text().toLowerCase(), searchText)) {
+                $(this).show();
+            }
+            else {
+                $(this).hide();
+            }
+        });
+    });
+    $("#SearchStu").keyup(function () {
+        var searchText1 = $("#SearchStu").val().toLowerCase();
+        $(".SearchStu").each(function () {
+            var id1 = $(this).find(".nameTpStu");
+            if (Contains($(id1).text().toLowerCase(), searchText1)) {
+                $(this).show();
+            }
+            else {
+                $(this).hide();
+            }
+        });
+    });
+ 
+</script>

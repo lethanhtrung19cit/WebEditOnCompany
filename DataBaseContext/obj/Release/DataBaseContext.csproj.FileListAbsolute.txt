@@ -1,0 +1,17 @@
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\DataBaseContext.dll.config
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\DataBaseContext.dll
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\DataBaseContext.pdb
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\DataValidationFramework.Net.dll
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\DataValidationLibrary.dll
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\EntityFramework.dll
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\EntityFramework.SqlServer.dll
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\PagedList.dll
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\PagedList.Mvc.dll
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\EntityFramework.xml
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\EntityFramework.SqlServer.xml
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\PagedList.xml
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\bin\Release\PagedList.Mvc.xml
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\obj\Release\DataBaseContext.csproj.CoreCompileInputs.cache
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\obj\Release\DataBaseContext.csproj.CopyComplete
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\obj\Release\DataBaseContext.dll
+D:\DuAnQLNCKH\ScientificMangement\DuAnQLNCKH\DataBaseContext\obj\Release\DataBaseContext.pdb

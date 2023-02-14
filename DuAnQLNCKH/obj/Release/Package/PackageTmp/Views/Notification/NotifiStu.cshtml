@@ -1,0 +1,135 @@
+﻿@model DuAnQLNCKH.Models.FileNotifiModel
+
+@{
+    ViewBag.Title = "Thông báo sinh viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var noti = (List<DuAnQLNCKH.Models.Notification>)ViewBag.NotificationsStu;
+
+}
+@*<link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />*@
+ 
+<div style="margin-top: 20px; color: #1d68c5" class="page-title">
+
+    <img src="~/images/speaker.png" width="50px" height="50px" />
+    <strong style="font-size:20px">THÔNG BÁO SINH VIÊN</strong>
+</div>
+<hr />
+<div class="row-cols-lg-12">
+    @foreach (var item in noti)
+    {
+        <p>
+            @{
+                var url = "/thong-bao/" + @item.Title + "-" + @item.IdNo;
+            }
+            <i style="color: #5757c1" class="fa fa-flag"></i>
+            <b> <a id="" href="@url"> @item.Title</a><small>[@item.DateCreat]</small></b>
+
+        </p>
+    }
+</div>
+
+<div id="showModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" style="max-width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Thêm mới thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            @using (Html.BeginForm("CreateNotifi", "Notification", FormMethod.Post, new { @class = "form - horizontal", enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+
+                    <div class="form-group">
+
+                        <input type="hidden" value="@DateTime.Now.ToString("d")" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" value="@Session["UserName"]" />
+
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="Object" value="SV" />
+                    </div>
+
+                    <div class="form-group">
+                        Tiêu đề
+
+
+                        @Html.TextBox("Title", null, new { @class = "form-control", required = "Required", Value = "" })
+
+
+                    </div>
+
+                    <div class="form-group">
+                        Nội dung thông báo
+                        @Html.TextBox("Content", null, new { @class = "form-control", required = "Required" })
+
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.FileName)
+
+                        <input type="file" id="files" name="files" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Lưu" />
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@if (Session["Acess"].ToString().Equals("1"))
+{
+    <button style="background: #2cc6dc;" id='addtype' class="btn btn-primary btnAddNotificationStu">
+        <i class="fa fa-plus">Thêm mới</i>
+    </button>
+}
+
+
+@if (Session["Acess"].ToString().Equals("1"))
+{
+    //<button style="margin: 20px 0 20px 20px; background: #f7bf30;" id='email' class="btn btn-primary" data-toggle="modal" data-target="#showmodal1"><i class="fa fa-envelope"> <span style="margin-left:5px">Gửi email thông báo</span></i> </button>
+}
+<script type="text/javascript">
+    $('.btnAddNotificationStu').on('click', function () {
+        $('#showModal').modal('show');
+    })
+    $(function () {
+        $("#IdLeEm1").chosen({
+            width: "560px"
+        });
+        $("#Progress").change(function () {
+
+            $.get("/Notification/getTypeList1", { Progress: $("#Progress").val() }, function (data) {
+                $("#IdLeEm1").empty(); $("#IdLeEm1").select();
+                if (data != null) {
+                    $.each(data, function (index, row) {
+                        $("#IdLeEm1").append("<option id='IdPi'  value='" + row.Email + "'>" + row.Email + "</option>");
+
+                        $('#IdLeEm1').find('option[value="' + row.Email + '"]').attr("selected", "selected");
+
+                    });
+                }
+                $('#IdLeEm1').trigger("chosen:updated");
+
+            });
+        })
+    });
+
+        //$('select').find('option[value="GV01"]').attr("selected", "selected");
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

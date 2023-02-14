@@ -1,0 +1,315 @@
+﻿
+@{
+    ViewBag.Title = "Cập nhật điểm NCKH";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var listPoint = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.listPoint;
+    var listType = (List<DuAnQLNCKH.Models.Type>)ViewBag.listType;
+    int stt = 1;
+    int sttDetail = 1;
+    string id = "a";
+
+}
+@model DuAnQLNCKH.Models.PointTable
+@using DuAnQLNCKH.Models
+
+<div class="page-header" style="margin-top:20px">
+    <strong style="color:blue; font-size:26px; font-weight:bold">Cập nhật điểm NCKH</strong>
+</div>
+<hr />
+
+
+
+ @foreach (var item in listType)
+{
+    <h2> @item.NameType</h2>
+
+    using (Html.BeginForm("ExcelData", "UpdatePoint", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+<div class="info2">
+    <a href="@Url.Action("DownloadFile","Notification",new { filePath = "/UpLoadFile/File mau công bố kết quả.xlsx"})">
+        <h5>Nhập điểm công trình nghiên cứu khoa học bằng Upload file Excel</h5>
+    </a>
+    @Html.AntiForgeryToken()
+    <input type="hidden" value="@item.IdType" name="IdType" />
+    <div class="form-group" name="Fichier1">
+        <!-- COMPONENT START -->
+        <div class="form-group">
+            <div class="input-group input-file">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-choose" type="button">Choose</button>
+                </span>
+                <input type="text" class="form-control" placeholder='Choose a file...' />
+
+            </div>
+        </div>
+        @*<input type="file" id="dataFile" name="upload" />*@
+
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Upload" class="btn btn-default" />
+    </div>
+
+    @Html.ValidationMessage("File" + item.IdType, "", new { @class = "text-danger" })<br />
+    @Html.ValidationMessage("File1" + item.IdType, "", new { @class = "text-danger" })<br />
+
+
+</div>
+    }
+    if (new TopicOfLectureModel().listTopicLecture(item.IdType).Count > 0)
+    {
+
+        <table class="table1">
+            <tr class="headerrow">
+                <th>
+                    STT
+                </th>
+                <th>
+                    Tên công trình
+                </th>
+                <th>
+                    Người thực hiện
+                </th>
+
+                <th>
+                    Ngày thực hiện
+                </th>
+
+                <th>
+                    Xếp loại
+                </th>
+                <th>Giờ</th>
+                <th>File minh chứng</th>
+                <th></th>
+            </tr>
+
+            @foreach (var t in new TopicOfLectureModel().listTopicLecture(item.IdType))
+            {
+                <tr id="@stt.ToString()">
+                    <td>
+                        @stt.ToString()
+                         
+                    </td>
+                    <td style="width:150px">
+                        @t.Name
+                    </td>
+                    <td style="width:140px">
+                        @foreach (var p in new TopicOfLectureModel().listAuthors(t.IdTp))
+                        {
+                            <b>@p.author.NameAu</b><br />
+                        }
+
+                    </td>
+
+                    <td>
+                        @t.DateSt.ToString("dd/MM/yyyy")
+                    </td>
+
+                    <td style="width:100px">
+                        @{
+                            var grade = "";
+                            foreach (var p in new TopicOfLectureModel().listAuthors(t.IdTp))
+                            {
+                                if (p.pointTable.Grade == 1)
+                                {
+                                    grade = "Đạt";
+                                }
+                                else if (p.pointTable.Grade == 2)
+                                {
+                                    grade = "Khá";
+                                }
+                                else if (p.pointTable.Grade == 3)
+                                {
+                                    grade = "Xuất Sắc";
+                                }
+                                else if (p.pointTable.Grade == 0)
+                                {
+                                    grade = "Không đạt";
+                                }
+                            }
+                        }
+                        <span>@grade</span>
+                    </td>
+                    <td style="width:100px">
+                        @foreach (var p in new TopicOfLectureModel().listAuthors(t.IdTp))
+                        {
+                            string HourAuthor = "editHour" + p.pointTable.IdP;
+                            string saveHour = "saveHour" + p.pointTable.IdP;
+                            string tdHour = "tdHour" + p.pointTable.IdP;
+                            <input type="number" class="form-control" style="display:none; width:70px" id="@HourAuthor" /><br />
+                            <input class="btn btn-primary" type="button" style="display:none" id="@saveHour" value="Lưu" onclick="saveHour('@p.pointTable.IdP')" />
+                            <span id="@tdHour">
+                                @p.pointTable.Hours
+                            </span>
+                            <a onclick="editHour(@p.pointTable.IdP, @p.pointTable.Hours)" class='fa fa-edit'><span class='glyphicon glyphicon-pencil'></span></a>
+
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("DownloadFile","Notification",new { filePath = t.FileDemo})">@t.FileDemo</a>
+                    </td>
+
+                    <td>
+
+                        @{
+                            id = id + stt.ToString();
+                        }
+                        <button class="btn btn-success" type="button" data-target="#@t.IdTp" data-toggle="modal"><i class="fa fa-check"></i></button>
+                        <button onclick="cancel('@t.IdTp', @stt)" class="btn btn-danger" type="button"><i class="fa fa-times"></i></button>
+                        <div id="@t.IdTp" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document" style="max-width:800px">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Nghiệm thu công trình</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    @using (Html.BeginForm("Approve", "UpdatePoint", FormMethod.Post, new { @class = "form - horizontal", enctype = "multipart/form-data" }))
+                                    {
+                                        <div class="modal-body">
+                                            <input type="hidden" name="IdTp" value="@t.IdTp" />
+                                            <div class="form-group">
+                                                <h4 style="display:inline-block"> Xếp Loại</h4>
+                                                @Html.DropDownList("Grade", (IEnumerable<SelectListItem>)ViewBag.listGrade, "--Lựa chọn Xếp loại--", new { @class = "form-control", @style = "width:200px; display: inline-block " })
+
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="submit" class="btn btn-primary" value="Duyệt" />
+                                        </div>
+                                    }
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                    </td>
+                </tr>
+                stt++;
+            }
+
+        </table>
+    }
+
+}
+
+ 
+
+<script>
+    function bs_input_file() {
+        $(".input-file").before(
+            function () {
+                if (!$(this).prev().hasClass('input-ghost')) {
+                    var element = $("<input type='file' id='dataFile' name='upload' class='input-ghost' style='visibility:hidden; height:0'>");
+                    element.attr("name", $(this).attr("name"));
+                    element.change(function () {
+                        element.next(element).find('input').val((element.val()).split('\\').pop());
+                    });
+                    $(this).find("button.btn-choose").click(function () {
+                        element.click();
+                    });
+                    $(this).find("button.btn-reset").click(function () {
+                        element.val(null);
+                        $(this).parents(".input-file").find('input').val('');
+                    });
+                    $(this).find('input').css("cursor", "pointer");
+                    $(this).find('input').mousedown(function () {
+                        $(this).parents('.input-file').prev().click();
+                        return false;
+                    });
+                    return element;
+                }
+            }
+        );
+    }
+
+    function clear() {
+        var input = $("#dataFile").val('');
+    };
+    $(function () {
+        clear();
+        bs_input_file();
+    });
+    function editHour(IdP, Hour) {
+        $('#editHour' + IdP).show();
+        $('#editHour' + IdP).val(Hour);
+        $('#tdHour' + IdP).hide();
+        $('#saveHour' + IdP).show();
+
+    }
+    function saveHour(IdP) {
+        var hour = $('#editHour' + IdP).val();
+        $('#tdHour' + IdP).text(hour);
+        $('#editHour' + IdP).hide(); 
+        $('#saveHour' + IdP).hide();
+        $('#tdHour' + IdP).show();
+        $.ajax({
+            type: "POST",
+            url: "/UpdatePoint/updateHour/",
+            data: { IdP: IdP, Hours: hour },
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+    }
+    function cancel(IdTp, stt) {
+        console.log(stt);
+        $('#' + stt).remove();
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/UpdatePoint/DisApprove/",
+        //    data: { IdTP: IdTp },
+
+        //    dataType: "json",
+        //    success: function () {
+
+        //    }
+
+        //});
+    }
+    function deleteType(IdTy) {
+
+
+        var row = $('#' + IdTy);
+
+        row.remove();
+
+        $.ajax({
+            type: "POST",
+            url: "/UpdatePoint/DeleteType/",
+            data: { IdTy: IdTy },
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+    function updateTopic(IdTp, stt, id) {
+        //alert('#Status+' + IdTp);
+
+        var Status = $("input#" + id).val();
+
+
+        $("#input" + id).attr('data-val-required', 'true');
+
+
+        $('#' + stt).text(Status);
+        //alert("Cập nhật thành công");
+        $.ajax({
+            type: "POST",
+            url: "/UpdatePoint/Update/",
+            data: { IdP: IdTp, Value: Status },
+
+            dataType: "json",
+            success: function (data) {
+
+            }
+
+        });
+    }
+</script>

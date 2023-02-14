@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="nckh_dhdnModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="nckh_dhdnEntities7" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="sp_insert_file">
+      <Parameter Name="file_name" Mode="In" Type="String" />
+      <Parameter Name="file_ext" Mode="In" Type="String" />
+      <Parameter Name="file_base64" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,15 @@
+<div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr>
+			<th scope="col">Tên đề tài</th><th scope="col">Tên giảng viên</th><th scope="col">Loại đề tài</th><th scope="col">Ngày bắt đầu</th><th scope="col">Thời gian</th><th scope="col">Kinh phí</th><th scope="col">Trạng thái</th><th scope="col">Tiến độ</th>
+		</tr><tr>
+			<td>Đề t&#224;i nghi&#234;n cứu vi sinh vật</td><td>Nguyễn Thị Thu</td><td>Tạp ch&#237; SCI/SSCI/A&amp;HCI mức Q1</td><td>04/05/2021 00:00:00</td><td>1</td><td>100000</td><td>đ&#227; duyệt</td><td>chờ b&#225;o c&#225;o lần 1</td>
+		</tr><tr>
+			<td>Thực trạng sử dụng m&#225;u v&#224; chế phẩm m&#225;u tại Bệnh viện đa khoa tỉnh Bắc Kạn</td><td>Nguyễn Thị Thu</td><td>Tạp ch&#237; SCI/SSCI/A&amp;HCI mức Q1</td><td>27/04/2021</td><td>1</td><td>15000</td><td>đ&#227; duyệt</td><td>chờ b&#225;o c&#225;o lần 1</td>
+		</tr><tr>
+			<td>Đề t&#224;i nghi&#234;n cứu thuốc</td><td>Nguyễn Thị Thu</td><td>Tạp ch&#237; SCI/SSCI/A&amp;HCI mức Q1</td><td>04/05/2021</td><td>1</td><td>100000</td><td>chưa duyệt</td><td>chờ duyệt</td>
+		</tr><tr>
+			<td>N&#226;ng cao vai tr&#242; t&#237;n dụng ng&#226;n h&#224;ng</td><td>Nguyễn Thị Thu</td><td>Tạp ch&#237; SCI/SSCI/A&amp;HCI mức Q1</td><td>04/05/2021</td><td>1</td><td>100000</td><td>đ&#227; duyệt</td><td>chờ b&#225;o c&#225;o lần 1</td>
+		</tr>
+	</table>
+</div>

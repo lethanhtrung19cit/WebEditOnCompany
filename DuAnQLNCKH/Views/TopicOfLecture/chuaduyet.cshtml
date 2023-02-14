@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "Xét duyệt công trình";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listLecture = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.TopicOfLecture;
+    var stt = 1;
+}
+@using DuAnQLNCKH.Models
+<div style="margin:20px 0 20px 0" class="page-title">
+
+    <strong style="font-size:25px">Xét duyệt công trình</strong>
+</div>
+<hr style="width:1200px" />
+@if (listLecture.Count > 0)
+{
+    <div>
+        <table class="table1">
+
+            <tr class="headerrow">
+                <th>
+                    STT
+                </th>
+                <th>
+                    Nhóm tác giả
+                </th>
+
+                <th>
+                    Tên công trình
+                </th>
+
+                <th>
+                    Phân loại
+                </th>
+                <th>
+                    Ngày bắt đầu
+                </th>
+
+                <th>
+                    Ngày kết thúc
+                </th>
+                <th>
+                    Kinh phí
+                </th>
+
+                 
+                <th></th>
+            </tr>
+            @foreach (var deTaiGV in listLecture)
+            {
+                var expense = "expense" + deTaiGV.topicOfLecture.IdTp;
+                var btnsave = "btnsave" + deTaiGV.topicOfLecture.IdTp;
+                var tdExpense = "tdExpense" + deTaiGV.topicOfLecture.IdTp;
+                <tr id="@deTaiGV.topicOfLecture.IdTp" class="lecture">
+                    @*<td id="idtp" data-value="@deTaiGV.topicOfLecture.IdTp">
+
+                        </td>*@
+                    <td class="stt" id="@stt">@stt </td>
+                    @{ stt++;}
+                    <td width="120px">
+
+                        @foreach (var i in new TopicOfLectureModel().listAu(deTaiGV.topicOfLecture.IdTp))
+                        {
+                            if (i.Grade == 0)
+                            {
+                                <div>@i.NameAu (CN)</div>
+                            }
+                            else
+                            {
+                                <div> @i.NameAu</div>
+                            }
+                        }
+
+                    </td>
+                    <td width="200px">
+                        @deTaiGV.topicOfLecture.Name
+                    </td>
+
+                    <td style="width:130px">
+                        @deTaiGV.type.NameType
+
+                    </td>
+                    <td>
+                        @deTaiGV.topicOfLecture.DateSt.ToString("dd/MM/yyyy")
+                    </td>
+
+                    <td>
+                        @{
+
+                            DateTime dateEnd = deTaiGV.topicOfLecture.DateSt.AddMonths(deTaiGV.topicOfLecture.Times);
+                            <p>@dateEnd.ToString("dd/MM/yyyy")</p>
+                        }
+                    </td>
+                    <td id="@tdExpense">
+                        @deTaiGV.topicOfLecture.Expense
+                        <a onclick="editExpense('@deTaiGV.topicOfLecture.IdTp', '@deTaiGV.topicOfLecture.Expense')" class='fa fa-edit'><span class='glyphicon glyphicon-pencil'></span></a>
+                        <input type="text" style="display:none" id="@expense" /><br />
+                        <input class="btn btn-primary" type="button" style="display:none" id="@btnsave" value="Lưu" onclick="saveExpense('@deTaiGV.topicOfLecture.IdTp')" />
+                    </td>
+                     
+                    <td style="width:210px">
+                        @* <button style="width:100px" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" onclick="XdBtnClicked('@deTaiGV.topicOfLecture.IdTp', '@deTaiGV.topicOfLecture.DateSt.ToString("dd/MM/yyyy")', '@deTaiGV.topicOfLecture.Name', '@deTaiGV.information.Email')"> <span class="icon text-white-50"><i class="fas fa-check"> </i></span>  <span><b>Duyệt</b></span>    </button>*@
+                        <a class="btn btn-success" href="@Url.Action("detailTopicLecture", "TopicOfLecture", new { IdTp=deTaiGV.topicOfLecture.IdTp})"> <span class="icon text-white-50"><i class="fa fa-pencil-alt"> </i></span>  <span><b>Xem chi tiết</b></span>    </a>
+
+                    </td>
+
+
+                </tr>
+
+            }
+
+        </table>
+    </div>
+}
+else
+{
+    <h2>Không có công trình chờ duyệt nào</h2>
+}
+
+<script>
+    function editExpense(IdTp, Expense) {
+        $('#expense' + IdTp).show();
+        $('#expense' + IdTp).val(Expense);
+        $('#btnsave' + IdTp).show();
+
+    }
+    function saveExpense(IdTp) {
+        var expense = $('#expense' + IdTp).val();
+        $('#tdExpense' + IdTp).text(expense);
+        $('#expense' + IdTp).hide();
+        $('#btnsave' + IdTp).hide();
+        $('#tdExpense' + IdTp).show();
+        $.ajax({
+            type: "POST",
+            url: "/TopicOfLecture/EditExpense/",
+            data: { IdTp: IdTp, expense: expense },
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+    }
+</script>

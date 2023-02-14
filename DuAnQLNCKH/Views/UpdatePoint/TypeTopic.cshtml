@@ -1,0 +1,238 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách phân loại công trình";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listTypeTopic = (List<DuAnQLNCKH.Models.Type>)ViewBag.listTypeTopic;
+    var sttType = 0;
+    var sttDetail1 = 0;
+    var sttDetail2 = 0;
+    var listDetail = (List<DuAnQLNCKH.Models.DetailType1>)ViewBag.listDetail;
+
+}
+@using DuAnQLNCKH.Models
+<div class="page-header" style="margin-top:20px">
+    <strong style="color:blue; font-size:26px; font-weight:bold">Danh sách phân loại đề tài nghiên cứu khoa học</strong>
+</div>
+<hr />
+
+<button style="margin: 20px 0 20px 0; background: #2cc6dc" id='addType' class="btn btn-primary" data-toggle="modal" data-target="#showmodalType"> <i class="fa fa-plus">Thêm mới phân loại</i></button>
+<div id="showmodalType" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" style="max-width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Thêm mới phân loại</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            @using (Html.BeginForm("addType", "UpdatePoint", FormMethod.Post))
+            {
+                <div class="modal-body">
+
+
+                    <div class="form-group">
+                        Tên phân loại
+                        @Html.TextBox("nameType", null, new { @class = "form-control", @required = "Required" })
+                    </div>
+                    <div>
+                        Có bao nhiêu thành phần con trong chi tiết đề tài
+                        <input class="form-control" type="number" name="Level" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Lưu" />
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<table class="table1">
+
+    <tr class="headerrow">
+        <th>STT</th>
+        <th>Tên phân loại</th>
+    </tr>
+    @foreach (var item in listTypeTopic)
+    {
+        sttType++;
+        <tr>
+            <td>@sttType</td>
+            <td>@item.NameType</td>
+        </tr>
+
+    }
+</table>
+
+<div style="margin-top:20px">
+    <strong style="color:blue; font-size:26px; font-weight:bold">Danh sách chi tiết phân loại đề tài nghiên cứu khoa học</strong>
+</div>
+<hr />
+
+<button style="margin: 20px 0 20px 0; background: #2cc6dc" id='addType' class="btn btn-primary" data-toggle="modal" data-target="#showmodalDetailType"> <i class="fa fa-plus">Thêm mới chi tiết phân loại</i></button>
+<div id="showmodalDetailType" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" style="max-width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm mới chi tiết phân loại</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            @using (Html.BeginForm("addDetailType", "UpdatePoint", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <div class="form-group">
+                        Phân loại
+                        @Html.DropDownList("IdType", ViewBag.listType as SelectList, "--Lựa chọn phân loại đề tài--", new { @class = "form-control", @onchange = "addDetail()", @style = "background:#white; color:black; border:solid 1px black" })
+
+
+                        <div id="Detail"></div>
+                        <input type="hidden" name="Level" id="Level" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Lưu" />
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@if (listDetail.Count > 0)
+{
+
+    foreach (var itemType in listTypeTopic)
+    {
+        sttDetail1 = 1;
+        sttDetail2 = 1;
+        <div><h3 style="color:black">@itemType.NameType</h3></div>
+        if (itemType.Level == 0)
+        {
+
+            <table class="table1">
+
+                <tr class="headerrow">
+                    <th>STT</th>
+                    <th>Nội dung nghiên cứu</th>
+                    <th>Giờ chuẩn</th>
+                </tr>
+                @foreach (var item in new TypeModel().listDetail(itemType.IdType))
+                {
+                    <tr>
+                        <td>@sttDetail1</td>
+                        <td>@item.NameDetail</td>
+                        <td>@item.Hours</td>
+                    </tr>
+                    sttDetail1++;
+                }
+            </table>
+
+        }
+        else
+        {
+            var listChild = new TypeModel().listChild(itemType.IdType);
+            if (listChild.Count > 0)
+            {
+                <table class="table1">
+
+                    <tr class="headerrow">
+                        <th rowspan="2">STT</th>
+                        <th rowspan="2">Nội dung nghiên cứu</th>
+                        <th colspan="@itemType.Level">Giờ chuẩn</th>
+                    </tr>
+
+                    <tr class="headerrow">
+                        @for (int i = 0; i < itemType.Level; i++)
+                        {
+                            <th>@listChild[i].NameChild</th>
+                        }
+                    </tr>
+                    @foreach (var item in new TypeModel().listDetail(itemType.IdType))
+                    {
+
+                        var listHours = new TypeModel().listHours(item.IdDetail);
+                        <tr>
+                            <td>@sttDetail2</td>
+                            <td>@item.NameDetail</td>
+                            @foreach (var itemChild in listHours)
+                            {
+                                <td>@itemChild.Hours</td>
+                            }
+
+                        </tr>
+                        sttDetail2++;
+                    }
+                </table>
+            }
+
+
+        }
+        sttDetail1++;
+        sttDetail2++;
+    }
+}
+<input id="sttDetail" type="hidden" value="1" />
+<script>
+    function addDetail() {
+
+        $.get("/UpdatePoint/getLevel", { IdType: $("#IdType").val() }, function (data) {
+            checkValue(data);
+
+        });
+
+    }
+
+    function checkValue(data) {
+
+        event.preventDefault();
+        $('#sttDetail').val('1');
+        var number = data;
+        $('#Level').val(number);
+        if (number == 0) {
+            $(".detail").remove();
+            $("#addNew").remove();
+            $('#Detail').append("<div class='detail'></div>")
+            $('#Detail').append("<button style='margin:10px' id='addNew' class='btn btn-primary' type='button' onclick='addNewDetailL1()'>Thêm mới chi tiết</button>")
+
+            addNewDetailL1();
+
+        }
+        else {
+
+            $(".detail").remove();
+            $("#addNew").remove();
+            $('#Detail').append("<div class='detail'></div>")
+            $('#Detail').append("<button style='margin:10px' id='addNew' class='btn btn-primary' type='button' onclick='addNewDetailL2()'>Thêm mới chi tiết</button>")
+
+            addNewDetailL2();
+
+        }
+
+
+    }
+    function addNewDetailL1() {
+        var stt = $('#sttDetail').val();
+        $('.detail').append("<br>Tên chi tiết" + stt + ": <input class='form-control' name='nameDetail' type='text'>")
+        $('.detail').append("Giờ: <input class='form-control' name='Hours' type='number'>")
+        stt++;
+        $('#sttDetail').val(stt);
+    }
+    function addNewDetailL2() {
+        var stt = $('#sttDetail').val();
+
+        $('.detail').append("<br>Tên chi tiết " + stt + ": <input class='form-control' name='nameDetail' type='text'>")
+        $('.detail').append("<div class='child" + stt + "'></div>");
+        addChild(stt);
+
+    }
+    function addChild(stt) {
+        var sttLv = $('#Level').val();
+        for (var i = 1; i <= sttLv; i++) {
+            $('.child' + stt).append("Tên thành phần " + i + ": <input class='form-control' name='nameChild' type='text'>")
+            $('.child' + stt).append("Giờ: <input class='form-control' name='Hours' type='number'>")
+        }
+        stt++;
+        $('#sttDetail').val(stt);
+    }
+</script>
+
+
+

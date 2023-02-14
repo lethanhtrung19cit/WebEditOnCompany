@@ -1,0 +1,132 @@
+﻿@model PagedList.IPagedList<DuAnQLNCKH.Models.Account>
+@using PagedList.Mvc
+@{ ViewBag.Title = "Danh sách tài khoản";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    }
+ 
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh Sách Tài Khoản</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @using (Html.BeginForm("Index", "Admin", FormMethod.Get))
+                        {
+                             
+                                <div>
+                                    <input class="form-control" style="display:inline-block; width:1000px" type="text" value="@ViewBag.seaching" name="seach" />
+                                 
+                                    <button style="display:inline-block; margin-bottom:5px" class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+ 
+                                </div>
+                          
+                         
+                         }
+                    </div>
+                    <div style="margin-left:20px">
+                        <a href="@Url.Action("FormInsert", "Admin")">Thêm mới tài khoản</a>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <table class="table table-bordered dataTable" id="dataTable" width="96%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">#</th>
+                                    <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">#</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 246px;">Tên Tài Khoản</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 114px;">Quyền</th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 51px;">Trạng Thái</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th rowspan="1" colspan="1">#</th>
+                                    <th rowspan="1" colspan="1">#</th>
+                                    <th rowspan="1" colspan="1">Tên Tài Khoản</th>
+                                    <th rowspan="1" colspan="1">Quyền</th>
+                                    <th rowspan="1" colspan="1">Trạng Thái</th>
+
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("FormEdit", "Admin", new { Id=item.IdAccount})">Sửa</a><br />
+
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("DeleteAccount", "Admin", new { IdAccount=item.IdAccount})">Xóa</a><br />
+
+                                        </td>
+
+                                        <td>@item.Email</td>
+                                        @if (item.Access == 0)
+                                        {
+                                            <td>Người quản trị</td> 
+                                         }                                                            
+                                        else if (item.Access == 1)
+                                        {
+                                            <td>Phòng Nghiên cứu khoa học</td> 
+                                        }
+                                         else
+                                         {
+                                            <td>Giảng viên</td>
+                                         }
+                                         @if (item.Status == 0)
+                                         {
+                                            <td>Đang Sử Dụng</td> 
+                                         }
+                                          else 
+                                         {
+                                            <td>Đã Khóa</td>
+                                          }
+                                    </tr>
+                                    }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, @seach = @ViewBag.seaching }))
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .pagination-container .pagination li a {
+        border: solid 1px #bd8484;
+        display: block;
+        width: 100%;
+        height: 45px;
+        line-height: 35px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .pagination-container .pagination .active {
+        border: solid 1px #bd8484;
+        color: white;
+        background: #3b3be4;
+        display: block;
+        height: 45px;
+        line-height: 35px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    a:link {
+        text-decoration: none;
+    }
+    .pagination-container .pagination li {
+        width: 50px;
+    }
+</style>
+
+ 

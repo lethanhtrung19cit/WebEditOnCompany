@@ -185,5 +185,38 @@ namespace DuAnQLNCKH.Controllers
             return Redirect("Index");
             
         }
+        [Authorize(Roles = "0")]
+        [HttpPost]
+        public ActionResult changePassWord1(string OldPassword, string NewPassword, string ConfirmPassword)
+        {
+            string p = Session["UserName"].ToString();
+            var passWord = (from a in qLNCKHDHTDTD.Accounts where a.Email == p && a.Access == 0 select a.PassWord).First();
+
+            if (HashMD5.MD5Hash(OldPassword) == passWord) ViewBag.OldPassword = "";
+            else ModelState.AddModelError("OldPassword", "Mật khẩu cũ không đúng");
+            if (ConfirmPassword.Equals(NewPassword)) ViewBag.ConfirmPassword = "";
+            else ModelState.AddModelError("ConfirmPassword", "Xác nhận lại mật khẩu không đúng");
+
+            if (ViewBag.OldPassword == "" && ViewBag.ConfirmPassword == "")
+            {
+                int IdAccount = qLNCKHDHTDTD.Accounts.Where(x => x.Email == p && x.Access == 0).Select(x => x.IdAccount).FirstOrDefault();
+                var acc = qLNCKHDHTDTD.Accounts.Find(IdAccount);
+                acc.PassWord = HashMD5.MD5Hash(NewPassword);
+                qLNCKHDHTDTD.SaveChanges();
+                ModelState.AddModelError("result", "Đổi mật khẩu thành công");
+
+            }
+            return View("changePassWord");
+        }
+        [Authorize(Roles = "0")]
+        public ActionResult changePassWord()
+        {
+            string p = Session["UserName"].ToString();
+
+            var accounts = qLNCKHDHTDTD.Accounts.ToList().Where(a => a.Email == Session["UserName"].ToString());
+
+            return View();
+
+        }
     }
 }

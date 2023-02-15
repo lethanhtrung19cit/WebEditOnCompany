@@ -30,7 +30,12 @@
                     <div style="margin-left:20px">
                         <a href="@Url.Action("FormInsert", "Admin")">Thêm mới tài khoản</a>
                     </div>
-
+                    <div style="margin-left:20px">
+                        <a href="@Url.Action("changePassWord", "Admin")">Đổi mật khẩu</a>
+                    </div>
+                    <div style="margin-left:20px">
+                        <a href="@Url.Action("Index", "Login", new { id = "0" })">Đăng xuất</a>
+                    </div>
                     <div class="col-sm-12">
                         <table class="table table-bordered dataTable" id="dataTable" width="96%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                             <thead>
